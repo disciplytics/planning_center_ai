@@ -25,7 +25,5 @@ def pcoAuth():
           st.session_state.token = result.get('token')
           st.rerun()
   else:
-      st.button('Log Out')
-     
-
-  
+      if st.button('Log Out'):
+        del st.session_state.token
