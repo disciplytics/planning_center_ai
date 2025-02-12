@@ -26,4 +26,4 @@ with st.sidebar:
 
 pco = pypco.PCO(st.session_state.token)
 
-st.write(pco.get('/people/v2/people))#.get('https://api.planningcenteronline.com/people/v2/people'))
+st.write(pco.get('/people/v2/people'))#.get('https://api.planningcenteronline.com/people/v2/people'))
