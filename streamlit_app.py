@@ -5,11 +5,12 @@ import pypco
 
 st.title("Planning Center Analytics")
 
-with st.sidebar:
-  pcoAuth()
+#with st.sidebar:
+#  pcoAuth()
 
 if 'token' not in st.session_state:
   st.write('Please log into Planning Center to get started.')
+  pcoAuth()
 else:
   # Once you've gotten your access token, you can initialize a pypco object like this:
   pco = pypco.PCO(token=st.session_state.token['access_token'])
