@@ -1,8 +1,6 @@
 import streamlit as st
 from streamlit_oauth import OAuth2Component
 from utils.auth import pcoAuth
-import requests
-from requests_oauthlib import OAuth1
 
 
 # Set environment variables
