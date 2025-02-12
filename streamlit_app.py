@@ -14,7 +14,8 @@ REDIRECT_URI = st.secrets["REDIRECT_URI"]
 SCOPE = st.secrets["SCOPE"]
 
 st.title("Planning Center Analytics")
-
+with st.sidebar:
+  pcoAuth()
 import pypco
 
 # Generate the login URI
@@ -52,8 +53,7 @@ person = next(people)
 st.write(people)
 st.write(person)
 
-#with st.sidebar:
-#  pcoAuth()
+
 
 #pco = pypco.PCO(st.session_state.token)
 
