@@ -8,13 +8,17 @@ st.title("Planning Center Analytics")
 with st.sidebar:
   pcoAuth()
 
-# Once you've gotten your access token, you can initialize a pypco object like this:
-pco = pypco.PCO(token=st.session_state.token['access_token'])
+if st.session_state.token:
+  # Once you've gotten your access token, you can initialize a pypco object like this:
+  pco = pypco.PCO(token=st.session_state.token['access_token'])
+  
+  # Now, you're ready to go.
+  # The iterate() function provides an easy way to retrieve lists of objects
+  # from an API endpoint, and automatically handles pagination
+  people = pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus')
+  person = next(people)
+  
+  st.write(people)
 
-# Now, you're ready to go.
-# The iterate() function provides an easy way to retrieve lists of objects
-# from an API endpoint, and automatically handles pagination
-people = pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus')
-person = next(people)
-
-st.write(people)
+else:
+  st.write(' ')
