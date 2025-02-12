@@ -8,6 +8,6 @@ st.title("Planning Center Analytics")
 
 
 with st.sidebar:
-  oauth2 = pcoAuth()
+  pcoAuth()
 
-st.write(oauth2)#.get('https://api.planningcenteronline.com/people/v2/people'))
+st.write(st.session_state.token)#.get('https://api.planningcenteronline.com/people/v2/people'))
