@@ -19,7 +19,7 @@ def pcoAuth():
   # Check if token exists in session state
   if 'token' not in st.session_state:
       # If not, show authorize button
-      result = oauth2.authorize_button("Log In With Planning Center", REDIRECT_URI, SCOPE, icon = "planning_center_ai/logos/Icon - Home.png")
+      result = oauth2.authorize_button("Log In With Planning Center", REDIRECT_URI, SCOPE, icon = "https://www.planningcenter.com/images/logos/logo-full-color.png")
       if result and 'token' in result:
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
