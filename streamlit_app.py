@@ -8,7 +8,9 @@ st.title("Planning Center Analytics")
 with st.sidebar:
   pcoAuth()
 
-if st.session_state.token:
+if 'token' not in st.session_state:
+  st.write(' ')
+else:
   # Once you've gotten your access token, you can initialize a pypco object like this:
   pco = pypco.PCO(token=st.session_state.token['access_token'])
   
@@ -19,6 +21,4 @@ if st.session_state.token:
   person = next(people)
   
   st.write(people)
-
-else:
-  st.write(' ')
+  
