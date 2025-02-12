@@ -2,8 +2,6 @@ import streamlit as st
 
 st.title("hello")
 
-st.secrets["db_username"]
-
 
 # Set environment variables
 AUTHORIZE_URL = st.secrets["AUTHORIZE_URL"]
