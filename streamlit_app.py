@@ -17,11 +17,44 @@ st.title("Planning Center Analytics")
 
 import pypco
 
+# Generate the login URI
+#redirect_url = pypco.get_browser_redirect_url(
+#    st.secrets["PC_CLIENT_ID"],
+#    st.secrets["REDIRECT_URI"],
+#    st.secrets["SCOPE"]
+#)
+# Now, you'll have the URI to which you need to send the user for authentication
+# Here is where you would handle that and get back the code parameter PCO returns.
 
+# For this example, we'll assume you've handled this and now have the code
+# parameter returned from the API
 
-with st.sidebar:
-  pcoAuth()
+# Now, we'll get the OAuth access token json response using the code we received from PCO
+#token_response = pypco.get_oauth_access_token(
+#    st.secrets["PC_CLIENT_ID"],
+#    st.secrets["PC_CLIENT_SECRET"],
+#    "<CODE_HERE>",
+#    st.secrets["REDIRECT_URI"]
+#)
 
-pco = pypco.PCO(st.session_state.token)
+# The response you'll receive from the get_oauth_access_token function will include your
+# access token, your refresh token, and other metadata you may need later.
+# You may wish/need to store this entire response on disk as securely as possible.
+# Once you've gotten your access token, you can initialize a pypco object like this:
+pco = pypco.PCO(token=st.session_state.token['access_token'])
 
-st.write(pco.get('/people/v2/people'))#.get('https://api.planningcenteronline.com/people/v2/people'))
+# Now, you're ready to go.
+# The iterate() function provides an easy way to retrieve lists of objects
+# from an API endpoint, and automatically handles pagination
+people = pco.iterate('/people/v2/people')
+person = next(people)
+
+st.write(people)
+st.write(person)
+
+#with st.sidebar:
+#  pcoAuth()
+
+#pco = pypco.PCO(st.session_state.token)
+
+#st.write(pco.get('/people/v2/people'))#.get('https://api.planningcenteronline.com/people/v2/people'))
