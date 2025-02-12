@@ -24,20 +24,8 @@ def pcoAuth():
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
           st.rerun()
-
-          if st.button("Log Out"):
-            del st.session_state.token
   else:
-      # If token exists in session state, show the token
-      token = st.session_state['token']
-      st.json(token)
-      #if st.button("Refresh Token"):
-      # If refresh token button is clicked, refresh the token
-      token = oauth2.refresh_token(token)
-      st.session_state.token = token
-      st.rerun()
-
-      if st.button("Log Out"):
-        del st.session_state.token
+      st.button('Log Out')
+     
 
   
