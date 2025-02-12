@@ -27,3 +27,5 @@ def pcoAuth():
   else:
       if st.button('Log Out'):
         del st.session_state.token
+
+  return oauth2
