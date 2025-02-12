@@ -10,7 +10,7 @@ REFRESH_TOKEN_URL = st.secrets["TOKEN_URL"]
 REVOKE_TOKEN_URL = st.secrets["REVOKE_TOKEN_URL"]
 CLIENT_ID = st.secrets["PC_CLIENT_ID"]
 CLIENT_SECRET = st.secrets["PC_CLIENT_SECRET"]
-REDIRECT_URI = st.secrets["REDIRECT_URI "]
+REDIRECT_URI = st.secrets["REDIRECT_URI"]
 SCOPE = st.secrets["SCOPE"]
 
 # Create OAuth2Component instance
