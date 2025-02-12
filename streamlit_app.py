@@ -9,7 +9,7 @@ with st.sidebar:
   pcoAuth()
 
 if 'token' not in st.session_state:
-  st.write(' ')
+  st.write('Please log into Planning Center to get started.')
 else:
   # Once you've gotten your access token, you can initialize a pypco object like this:
   pco = pypco.PCO(token=st.session_state.token['access_token'])
