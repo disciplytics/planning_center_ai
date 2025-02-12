@@ -31,10 +31,10 @@ def pcoAuth():
       # If token exists in session state, show the token
       token = st.session_state['token']
       st.json(token)
-      if st.button("Refresh Token"):
-          # If refresh token button is clicked, refresh the token
-          token = oauth2.refresh_token(token)
-          st.session_state.token = token
-          st.rerun()
+      #if st.button("Refresh Token"):
+      # If refresh token button is clicked, refresh the token
+      token = oauth2.refresh_token(token)
+      st.session_state.token = token
+      st.rerun()
 
   
