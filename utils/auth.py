@@ -2,7 +2,6 @@ def pcoAuth():
   from streamlit_oauth import OAuth2Component
   import streamlit as st
   
-  
   # Set environment variables
   AUTHORIZE_URL = st.secrets["AUTHORIZE_URL"]
   TOKEN_URL = st.secrets["TOKEN_URL"]
@@ -19,12 +18,12 @@ def pcoAuth():
   # Check if token exists in session state
   if 'token' not in st.session_state:
       # If not, show authorize button
-      result = oauth2.authorize_button("Log In With Planning Center", REDIRECT_URI, SCOPE, icon = "https://github.com/disciplytics/planning_center_ai/blob/main/utils/Icon%20-%20Home.png")
+      result = oauth2.authorize_button("Log In With Planning Center", REDIRECT_URI, SCOPE)
       if result and 'token' in result:
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
           st.rerun()
-          return result
+          
   else:
       if st.button('Log Out'):
         del st.session_state.token
