@@ -5,7 +5,7 @@ import pypco
 
 
 logo, title = st.columns([.3,.7])
-logo.image("https://raw.githubusercontent.com/disciplytics/planning_center_ai/main/utils/dl_dark_logo.svg.png",)
+logo.image("https://raw.githubusercontent.com/disciplytics/planning_center_ai/main/utils/1200px-dl_dark_logo.svg.png",)
 title.title("Planning Center Analytics")
 
 
