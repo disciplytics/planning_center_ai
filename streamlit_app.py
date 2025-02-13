@@ -9,7 +9,7 @@ st.title("Planning Center Analytics")
 #  pcoAuth()
 
 if 'token' not in st.session_state:
-  st.write('Please log into Planning Center to get started.')
+  st.write('Please authorize our app access to your Planning Center data.')
   pcoAuth()
 else:
   # Once you've gotten your access token, you can initialize a pypco object like this:
