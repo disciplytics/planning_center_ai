@@ -5,11 +5,11 @@ import pypco
 
 
 logo, title = st.columns([.3,.7])
-logo.image("https://github.com/disciplytics/planning_center_ai/blob/main/utils/dl_dark_logo.png",)
+logo.image("https://raw.githubusercontent.com/disciplytics/planning_center_ai/blob/main/utils/dl_dark_logo.png",)
 title.title("Planning Center Analytics")
 
 
-
+#"https://raw.githubusercontent.com/djswoosh/Music-Recommendation-Engine-using-FMA-Dataset/main/1200px-The_Echo_Nest_logo.svg.png"
 
 
 #with st.sidebar:
