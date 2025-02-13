@@ -3,6 +3,7 @@ from streamlit_oauth import OAuth2Component
 from utils.auth import pcoAuth
 import pypco
 
+st.set_page_config(layout="wide")
 
 logo, title = st.columns([.3,.7])
 with logo:
