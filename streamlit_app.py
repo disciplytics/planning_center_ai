@@ -3,7 +3,12 @@ from streamlit_oauth import OAuth2Component
 from utils.auth import pcoAuth
 import pypco
 
-st.set_page_config(page_title="Planning Center Analytics App", layout="wide")
+from PIL import Image
+# Loading Image using PIL
+im = Image.open('/planning_center_ai/utils/dl_dark_logo.png')
+
+
+st.set_page_config(page_title="Planning Center Analytics App", layout="wide", page_icon  = im)
 
 st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displaybackgroundimage-shrink_350_1400/B4EZUAA8ZzHgAY-/0/1739462002589?e=1744848000&v=beta&t=miQyzZN82YjcYs9B_Mc-UVhaKt01dqVnPE56CnaVPbw",
         width = 250)
