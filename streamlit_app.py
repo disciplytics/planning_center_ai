@@ -4,9 +4,10 @@ from utils.auth import pcoAuth
 import pypco
 
 
-st.title("Planning Center Analytics")
+logo, title = st.columns([.3,.7])
+logo.image("https://github.com/disciplytics/planning_center_ai/blob/main/utils/dl_dark_logo.png",)
+title.title("Planning Center Analytics")
 
-st.image("https://github.com/disciplytics/planning_center_ai/blob/main/utils/dl_dark_logo.png", width=100)
 
 
 
