@@ -6,7 +6,7 @@ import pypco
 st.set_page_config(layout="wide")
 
 st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displaybackgroundimage-shrink_350_1400/B4EZUAA8ZzHgAY-/0/1739462002589?e=1744848000&v=beta&t=miQyzZN82YjcYs9B_Mc-UVhaKt01dqVnPE56CnaVPbw",
-        width = 500)
+        width = 250)
 st.title("Planning Center Analytics")
 
 
