@@ -6,18 +6,16 @@ import pypco
 st.set_page_config(layout="wide")
 
 st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displaybackgroundimage-shrink_350_1400/B4EZUAA8ZzHgAY-/0/1739462002589?e=1744848000&v=beta&t=miQyzZN82YjcYs9B_Mc-UVhaKt01dqVnPE56CnaVPbw",
-        width = 100)
+        width = 500)
 st.title("Planning Center Analytics")
 
-
-#"https://raw.githubusercontent.com/djswoosh/Music-Recommendation-Engine-using-FMA-Dataset/main/1200px-The_Echo_Nest_logo.svg.png"
 
 
 #with st.sidebar:
 #  pcoAuth()
 
 if 'token' not in st.session_state:
-  st.write('Please authorize our app access to your Planning Center data.')
+  st.write('Please authorize our app to access your Planning Center data.')
   pcoAuth()
 else:
   # Once you've gotten your access token, you can initialize a pypco object like this:
