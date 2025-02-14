@@ -35,4 +35,4 @@ else:
 
   st.dataframe(pd.json_normalize(st.session_state.people_df_logged))
 
-  st.write(st.session_state)
+  #st.write(st.session_state)
