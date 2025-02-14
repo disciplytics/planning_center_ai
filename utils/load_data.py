@@ -15,8 +15,7 @@ def load_data(pco):
     return households_df
 
   async def main():
-    await fetch_people_data()
-    await fetch_households_data()
+    return await fetch_people_data(), await fetch_households_data()
 
   
   return asyncio.run(main())
