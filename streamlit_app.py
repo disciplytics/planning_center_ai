@@ -28,7 +28,9 @@ else:
   # The iterate() function provides an easy way to retrieve lists of objects
   # from an API endpoint, and automatically handles pagination
   
-  st.write(load_data(pco))
+  people_df, household_df = load_data(pco)
+  st.dataframe(pd.json_normalize(household_df)
+  st.dataframe(pd.json_normalize(people_df)
   
 #st.json(people_df)
 #st.json(households_df)
