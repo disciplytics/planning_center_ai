@@ -14,7 +14,7 @@ def load_data():
 
    async def main():
      await fetch_people_data()
-     await fetch_households_data()
+     #await fetch_households_data()
 
   
   return asyncio.run(main())
