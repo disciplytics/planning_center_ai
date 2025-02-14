@@ -29,7 +29,9 @@ else:
 
   people_df = {}
   for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-       print(person)
+       people_df.update(person)
+  st.json(people_df)
+  
           
 
   
