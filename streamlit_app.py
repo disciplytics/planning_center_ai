@@ -41,8 +41,8 @@ else:
      return households_df
 
    async def main():
-     await fetch_people_data()
-     await fetch_households_data()
+      await fetch_people_data()
+      await fetch_households_data()
 
 if __name__ == "__main__":
     asyncio.run(main())
