@@ -13,8 +13,8 @@ def load_data():
     return households_df
   
   async def main():
-    await fetch_people_data()
-    await fetch_households_data()
+    people_df = await fetch_people_data()
+    households_df = await fetch_households_data()
   
   if __name__ == "__main__":
     asyncio.run(main())
