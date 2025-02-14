@@ -38,7 +38,7 @@ else:
      households_df = []
      for household in pco.iterate('/people/v2/households?include=people'):
          households_df.append(household)
-    return households_df
+     return households_df
 
    async def main():
      await fetch_people_data()
