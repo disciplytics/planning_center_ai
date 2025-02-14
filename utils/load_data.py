@@ -1,5 +1,5 @@
 def load_data():
-  import asyncio
+
   async def fetch_people_data():
     people_df = []
     for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
@@ -11,9 +11,5 @@ def load_data():
     for household in pco.iterate('/people/v2/households?include=people'):
       households_df.append(household)
     return households_df
-  
-  async def main():
-    people_df = await fetch_people_data()
-    households_df = await fetch_households_data()
-  
-  return people_df, households_df
+
+  return fetch_people_data, fetch_households_data
