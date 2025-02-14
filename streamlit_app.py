@@ -3,6 +3,8 @@ from streamlit_oauth import OAuth2Component
 from utils.auth import pcoAuth
 import pypco
 import pandas as pd
+import asyncio
+
 
 st.set_page_config(page_title="Planning Center Analytics App", layout="wide")
 
@@ -25,13 +27,28 @@ else:
   # Now, you're ready to go.
   # The iterate() function provides an easy way to retrieve lists of objects
   # from an API endpoint, and automatically handles pagination
-  people_df = []
-  for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-       people_df.append(person)
-
-  st.json(people_df)
-  st.dataframe(pd.json_normalize(people_df))
   
-          
+  async def fetch_people_data():
+          people_df = []
+          for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
+               people_df.append(person)
+    return people_df
+
+  async def fetch_households_data():
+          households_df = []
+          for household in pco.iterate('/people/v2/households?include=people'):
+               households_df.append(household)
+    return households_df
+
+   async def main():
+     await fetch_people_data()
+     await fetch_households_data()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+  
+st.json(people_df)
+st.json(households_df)
+#st.dataframe(pd.json_normalize(people_df))
 
   
