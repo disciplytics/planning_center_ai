@@ -28,6 +28,8 @@ else:
   people_df = []
   for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
        people_df.append(person)
+
+  st.json(people_df)
   st.dataframe(pd.json_normalize(people_df))
   
           
