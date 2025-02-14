@@ -16,5 +16,4 @@ def load_data():
     people_df = await fetch_people_data()
     households_df = await fetch_households_data()
   
-  if __name__ == "__main__":
-    asyncio.run(main())
+  return people_df, households_df
