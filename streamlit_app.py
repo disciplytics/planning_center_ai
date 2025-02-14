@@ -34,3 +34,5 @@ else:
   st.session_state.people_df_logged = people_df
 
   st.dataframe(pd.json_normalize(st.session_state.people_df_logged))
+
+  st.write(st.session_state)
