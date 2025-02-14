@@ -23,14 +23,12 @@ if 'token' not in st.session_state:
 else:
   # Once you've gotten your access token, you can initialize a pypco object like this:
   pco = pypco.PCO(token=st.session_state.token['access_token'])
-  
-  # Now, you're ready to go.
-  # The iterate() function provides an easy way to retrieve lists of objects
-  # from an API endpoint, and automatically handles pagination
-  
+
+  # load data from pco
   people_df, household_df = load_data(pco)
-  st.dataframe(pd.json_normalize(household_df)
-  st.dataframe(pd.json_normalize(people_df)
+  # do reporting
+  st.dataframe(pd.json_normalize(household_df))
+  st.dataframe(pd.json_normalize(people_df))
   
 #st.json(people_df)
 #st.json(households_df)
