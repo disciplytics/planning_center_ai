@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_oauth import OAuth2Component
 from utils.auth import pcoAuth
 import pypco
+import pandas as pd
 
 st.set_page_config(page_title="Planning Center Analytics App", layout="wide")
 
@@ -27,7 +28,7 @@ else:
   people_df = []
   for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
        people_df.append(person)
-  st.json(people_df)
+  st.dataframe(pd.json_normalize(people_df))
   
           
 
