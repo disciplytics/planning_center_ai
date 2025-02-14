@@ -12,4 +12,9 @@ def load_data():
       households_df.append(household)
     return households_df
 
-  return await fetch_people_data().result(), await fetch_households_data().result()
+   async def main():
+     await fetch_people_data()
+     await fetch_households_data()
+
+  
+  return asyncio.run(main())
