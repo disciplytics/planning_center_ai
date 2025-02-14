@@ -29,9 +29,5 @@ else:
   # do reporting
   st.dataframe(pd.json_normalize(household_df))
   st.dataframe(pd.json_normalize(people_df))
-  
-#st.json(people_df)
-#st.json(households_df)
-#st.dataframe(pd.json_normalize(people_df))
 
-  
+  st.write(st.session_state)
