@@ -1,6 +1,6 @@
 import asyncio
 
-def load_data():
+def load_data(pco):
   
   async def fetch_people_data():
     people_df = []
