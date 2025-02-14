@@ -27,7 +27,10 @@ else:
   # load data from pco
   people_df, household_df = load_data(pco)
   # do reporting
+        
   st.dataframe(pd.json_normalize(household_df))
   st.dataframe(pd.json_normalize(people_df))
 
-  st.write(st.session_state)
+  st.session_state.people_df_logged = people_df
+
+  st.dataframe(pd.json_normalize(people_df_logged))
