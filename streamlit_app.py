@@ -24,12 +24,9 @@ else:
   # Now, you're ready to go.
   # The iterate() function provides an easy way to retrieve lists of objects
   # from an API endpoint, and automatically handles pagination
-  people = pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus')
-  #person = next(people)
-
-  people_df = {}
+  people_df = []
   for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-       people_df.update(person)
+       people_df.append(person)
   st.json(people_df)
   
           
