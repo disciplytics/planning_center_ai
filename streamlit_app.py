@@ -25,14 +25,14 @@ else:
   pco = pypco.PCO(token=st.session_state.token['access_token'])
 
   # load data from pco
-  people_df, household_df = load_data(pco)
+  st.session_state.people_df, st.session_state.household_df = load_data(pco)
   # do reporting
         
-  st.dataframe(pd.json_normalize(household_df))
-  st.dataframe(pd.json_normalize(people_df))
+  st.dataframe(pd.json_normalize(st.session_state.household_df))
+  st.dataframe(pd.json_normalize(st.session_state.people_df))
 
-  st.session_state.people_df_logged = people_df
+  #st.session_state.people_df_logged = people_df
 
-  st.dataframe(pd.json_normalize(st.session_state.people_df_logged))
+  #st.dataframe(pd.json_normalize(st.session_state.people_df_logged))
 
   #st.write(st.session_state)
