@@ -23,9 +23,3 @@ def pcoAuth():
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
           st.rerun()
-          
-  else:
-      if st.button('Log Out'):
-        del st.session_state.token
-
-  
