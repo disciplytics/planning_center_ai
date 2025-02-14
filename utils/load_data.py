@@ -12,4 +12,4 @@ def load_data():
       households_df.append(household)
     return households_df
 
-  return fetch_people_data, fetch_households_data
+  return fetch_people_data(), fetch_households_data()
