@@ -25,21 +25,12 @@ st.title("Planning Center Analytics :church:")
 # PCO AUTH 
 with st.sidebar:
         if 'token' not in st.session_state:
-          st.write('Please authorize our app to access your Planning Center data.')
-          pcoAuth()
+                st.write('Please authorize our app to access your Planning Center data.')
+                pcoAuth()
         else:
-          # Once you've gotten your access token, you can initialize a pypco object like this:
-          pco = pypco.PCO(token=st.session_state.token['access_token'])
-        
-          # load data from pco
-          st.session_state.people_df, st.session_state.household_df = load_data(pco)
-          # do reporting
+                # Once you've gotten your access token, you can initialize a pypco object like this:
+                pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
-          st.dataframe(pd.json_normalize(st.session_state.household_df))
-          st.dataframe(pd.json_normalize(st.session_state.people_df))
-        
-          #st.session_state.people_df_logged = people_df
+                # load data from pco
+                st.session_state.people_df, st.session_state.household_df = load_data(pco)
 
-  #st.dataframe(pd.json_normalize(st.session_state.people_df_logged))
-
-  #st.write(st.session_state)
