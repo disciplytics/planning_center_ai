@@ -34,3 +34,8 @@ else:
         # load data from pco
         st.session_state.people_df, st.session_state.household_df = load_data(pco)
 
+        if st.button("Logout"):
+                del st.session_state["token"]
+                del st.session_state["people_df"]
+                del st.session_state["household_df"]
+
