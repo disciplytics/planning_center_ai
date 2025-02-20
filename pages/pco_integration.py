@@ -27,6 +27,7 @@ if 'token' not in st.session_state:
         st.write('Please authorize our app to access your Planning Center data.')
         pcoAuth()
 else:
+        st.write('You are logged in!')
         # Once you've gotten your access token, you can initialize a pypco object like this:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
