@@ -39,4 +39,5 @@ else:
                 del st.session_state["token"]
                 del st.session_state["people_df"]
                 del st.session_state["household_df"]
+                st.rerun()
 
