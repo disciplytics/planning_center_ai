@@ -18,6 +18,6 @@ st.title("Church Analytics :church:")
 # PCO AUTH 
 if 'token' not in st.session_state:
         st.write('Please authorize our app to access your Planning Center data.')
-        pcoAuth()        
-
-st.dataframe(st.session_state.people_df)
+        pcoAuth()     
+else:
+        st.dataframe(st.session_state.people_df)
