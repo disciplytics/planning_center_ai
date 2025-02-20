@@ -22,7 +22,5 @@ def pcoAuth():
       if result and 'token' in result:
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
-          st.rerun()
-          st.switch_page("pages/church_analytics.py")  
-          
+          st.rerun()          
         
