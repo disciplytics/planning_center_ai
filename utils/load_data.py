@@ -6,7 +6,7 @@ def load_data(pco):
     try:
       people_df = []
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-        people_df.append(person)
+        people_df.append(person['data']['attributes'])
       return people_df
     except Exception as e:
       # handle the exception
@@ -17,7 +17,7 @@ def load_data(pco):
     try:
       households_df = []
       for household in pco.iterate('/people/v2/households?include=people'):
-        households_df.append(household)
+        households_df.append(household['data']['attributes'])
       return households_df
     except Exception as e:
       # handle the exception
