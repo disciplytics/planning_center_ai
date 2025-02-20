@@ -32,7 +32,6 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
         # load data from pco
-        @cache_data
         st.session_state.people_df, st.session_state.household_df = load_data(pco)
 
         logout = st.button("Log out of Planning Center")
