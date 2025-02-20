@@ -32,9 +32,9 @@ overview_analytics = st.Page(
 # navigation 
 pg = st.navigation(
         {
-            "Planning Center Analytics": [overview_analytics],
-            "Planning Center Integration": [pco_integration],
-
+            "Home": [pco_integration],
+            "Reports": [overview_analytics],
+          
         }
     )
 
