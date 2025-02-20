@@ -29,7 +29,7 @@ def load_data(pco):
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
-      return e
+      return e.message
     
   async def main():
     return await fetch_people_data(), await fetch_households_data(), await fetch_donations_data()
