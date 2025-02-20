@@ -20,3 +20,5 @@ if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:
         st.dataframe(st.session_state.people_df)
+        st.dataframe(st.session_state.households_df)
+        st.dataframe(st.session_state.donations_df)
