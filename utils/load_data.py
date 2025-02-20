@@ -11,7 +11,7 @@ def load_data(pco):
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
         people_attr_df.append(person['data']['attributes'])
         people_rels_df.append(person['data']['relationships'])
-        people_include_df.append(person['included'])
+        people_include_df.append(person['included']['attributes'])
         
       people_attr_df=DataFrame(people_attr_df)
       people_rels_df=DataFrame(people_rels_df)
