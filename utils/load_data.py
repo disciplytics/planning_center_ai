@@ -1,5 +1,5 @@
 import asyncio
-from pandas import Dataframe, merge
+import pandas as pd
 def load_data(pco):
   
   async def fetch_people_data():
@@ -10,8 +10,8 @@ def load_data(pco):
         people_attr_df.append(person['data']['attributes'])
         people_rels_df.append(person['data']['relationships'])
         
-      people_attr_df=Dataframe(people_attr_df)
-      people_rels_df=Dataframe(people_rels_df)
+      people_attr_df=pd.Dataframe(people_attr_df)
+      people_rels_df=pd.Dataframe(people_rels_df)
       
       people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
       return people_df
