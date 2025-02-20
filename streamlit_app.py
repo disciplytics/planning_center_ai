@@ -18,9 +18,16 @@ pco_integration = st.Page(
   'pages/pco_integration.py', 
   title = 'Planning Center Integration', 
   icon=":material/sync:", 
-  default=True
+  default=False
 )
 
+
+overview_analytics = st.Page(
+  'pages/overview_analytics.py', 
+  title = 'Planning Center Analytics', 
+  icon=":material/monitoring:", 
+  default=True
+)
 
 # navigation 
 pg = st.navigation(
