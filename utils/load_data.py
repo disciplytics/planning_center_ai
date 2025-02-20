@@ -9,7 +9,7 @@ def load_data(pco):
         people_df.append(person)
       return people_df
     except:
-      pass
+      return []
   
   async def fetch_households_data():
     try:
@@ -18,7 +18,7 @@ def load_data(pco):
         households_df.append(household)
       return households_df
     except:
-      pass
+      return []
 
   async def fetch_donations_data():
     try:
@@ -27,7 +27,7 @@ def load_data(pco):
         donations_df.append(donation)
       return donations_df
     except:
-      pass
+      return []
     
   async def main():
     return await fetch_people_data(), await fetch_households_data(), await fetch_donations_data()
