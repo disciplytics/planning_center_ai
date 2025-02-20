@@ -14,8 +14,15 @@ def load_data(pco):
       households_df.append(household)
     return households_df
 
+
+  async def fetch_donations_data():
+    donations_df = []
+    for donation in pco.iterate('/giving/v2/donations?include=designations,labels,note,refund&where[updated_at]=2024-01-01T12:00:00Z'):
+      donations_df.append(donation)
+    return donations_df
+    
   async def main():
-    return await fetch_people_data(), await fetch_households_data()
+    return await fetch_people_data(), await fetch_households_data(), await fetch_donations_data()
 
   
   return asyncio.run(main())
