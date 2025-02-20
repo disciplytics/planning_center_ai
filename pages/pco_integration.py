@@ -32,11 +32,12 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
         # load data from pco
-        st.session_state.people_df, st.session_state.household_df = load_data(pco)
+        st.session_state.people_df, st.session_state.households_df, st.session_state.donations_df = load_data(pco)
 
         logout = st.button("Log out of Planning Center")
         if logout:
                 del st.session_state["token"]
                 del st.session_state["people_df"]
-                del st.session_state["household_df"]
+                del st.session_state["households_df"]
+                del st.session_state["donations_df"]
                 st.rerun()
