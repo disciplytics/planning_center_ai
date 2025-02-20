@@ -33,7 +33,7 @@ overview_analytics = st.Page(
 pg = st.navigation(
         {
             "Home": [pco_integration],
-            "Reports": [overview_analytics],
+            "Analytics": [overview_analytics],
           
         }
     )
