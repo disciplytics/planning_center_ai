@@ -26,9 +26,9 @@ def load_data(pco):
       for donation in pco.iterate('/giving/v2/donations?include=designations,labels,note,refund&where[updated_at]=2024-01-01T12:00:00Z'):
         donations_df.append(donation)
       return donations_df
-    except Exception as error:
+    except Exception as e:
       # handle the exception
-      return error
+      return f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
     
   async def main():
     return await fetch_people_data(), await fetch_households_data(), await fetch_donations_data()
