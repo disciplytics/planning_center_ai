@@ -17,6 +17,6 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
 if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:        
-        st.write(type(st.session_state.people_df))
+        st.write(pd.DataFrame(st.session_state.people_df))
         #st.dataframe(st.session_state.households_df)
         #st.write(st.session_state.donations_df)
