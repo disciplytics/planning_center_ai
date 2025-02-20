@@ -22,9 +22,9 @@ pco_integration = st.Page(
 )
 
 
-overview_analytics = st.Page(
-  'pages/overview_analytics.py', 
-  title = 'Planning Center Analytics', 
+church_analytics = st.Page(
+  'pages/church_analytics.py', 
+  title = 'Church Analytics', 
   icon=":material/monitoring:", 
   default=True
 )
@@ -33,7 +33,7 @@ overview_analytics = st.Page(
 pg = st.navigation(
         {
             "Home": [pco_integration],
-            "Analytics": [overview_analytics],
+            "Analytics": [church_analytics],
           
         }
     )
