@@ -34,7 +34,7 @@ else:
         # load data from pco
         st.session_state.people_df, st.session_state.household_df = load_data(pco)
 
-        logout = st.button("Logout")
+        logout = st.button("Logout of Planning Center")
         if logout:
                 del st.session_state["token"]
                 del st.session_state["people_df"]
