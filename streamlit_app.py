@@ -18,7 +18,7 @@ church_analytics = st.Page(
 # navigation 
 pg = st.navigation(
         {
-            "Home": [],
+            #"Home": [],
             "Analytics": [church_analytics],
             "Settings": [pco_integration],
           
