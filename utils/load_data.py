@@ -1,12 +1,19 @@
 import asyncio
-
+from pandas import Dataframe, merge
 def load_data(pco):
   
   async def fetch_people_data():
     try:
-      people_df = []
+      people_attr_df = []
+      people_rels_df = []
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-        people_df.append(person['data']['attributes'])
+        people_attr_df.append(person['data']['attributes'])
+        people_rels_df.append(person['data']['relationships'])
+        
+      people_attr_df=Dataframe(people_attr_df)
+      people_rels_df=Dataframe(people_rels_df)
+      
+      people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
       return people_df
     except Exception as e:
       # handle the exception
