@@ -8,8 +8,10 @@ def load_data(pco):
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
         people_df.append(person)
       return people_df
-    except:
-      return []
+    except Exception as e:
+      # handle the exception
+      error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
+      return e.status_code
   
   async def fetch_households_data():
     try:
@@ -17,8 +19,10 @@ def load_data(pco):
       for household in pco.iterate('/people/v2/households?include=people'):
         households_df.append(household)
       return households_df
-    except:
-      return []
+    except Exception as e:
+      # handle the exception
+      error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
+      return e.status_code
 
   async def fetch_donations_data():
     try:
