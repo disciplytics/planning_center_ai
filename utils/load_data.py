@@ -28,7 +28,8 @@ def load_data(pco):
       return donations_df
     except Exception as e:
       # handle the exception
-      return f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
+      error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
+      return e
     
   async def main():
     return await fetch_people_data(), await fetch_households_data(), await fetch_donations_data()
