@@ -20,10 +20,13 @@ if 'token' not in st.session_state:
 else:        
         with st.container():
                 st.write("Headcount Metrics")
-                st.session_state.headcounts_df['Headcount Type'] = st.session_state.headcounts_df['attributes.name_at']
-                st.session_state.headcounts_df['attributes.total'] = st.session_state.headcounts_df['attributes.total'].astype('int32')
-                st.session_state.headcounts_df['attributes.starts_at_at'] = st.session_state.headcounts_df['attributes.starts_at_at'].astype('datetime64[ns]')
-                st.bar_chart(data=st.session_state.headcounts_df, x='attributes.starts_at_at', y='attributes.total', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
+                @st.cache_data
+                def headcounts_trend(data):
+                        data['Headcount Type'] = data['attributes.name_at']
+                        data['attributes.total'] = data['attributes.total'].astype('int32')
+                        data['attributes.starts_at_at'] = data['attributes.starts_at_at'].astype('datetime64[ns]')
+                        return data
+                st.bar_chart(data=headcounts_trend(st.session_state.headcounts_df), x='attributes.starts_at_at', y='attributes.total', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
         
         
                 st.write(st.session_state.headcounts_df)
