@@ -7,7 +7,7 @@ def load_data(pco):
       people_data_df = pd.DataFrame()
       people_include_df = pd.DataFrame()
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['included'])])
+        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
         people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
               
       #people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
