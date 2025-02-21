@@ -20,10 +20,10 @@ if 'token' not in st.session_state:
 else:        
         @st.cache_data
         def headcounts_trend(data):
-                data['Headcount Type'] = data['attributes.name_at']
-                data['attributes.total'] = data['attributes.total'].astype('int32')
-                data['attributes.starts_at_at'] = data['attributes.starts_at_at'].astype('datetime64[ns]')
-                data = data.groupby(['Headcount Type', 'attributes.starts_at_at'])['attributes.total'].sum().reset_index()
+                #data['Headcount Type'] = data['attributes.name_at']
+                #data['attributes.total'] = data['attributes.total'].astype('int32')
+                #data['attributes.starts_at_at'] = data['attributes.starts_at_at'].astype('datetime64[ns]')
+                #data = data.groupby(['Headcount Type', 'attributes.starts_at_at'])['attributes.total'].sum().reset_index()
                 return data
         hc_trend_df = headcounts_trend(st.session_state.headcounts_df)
         
