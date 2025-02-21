@@ -1,5 +1,5 @@
 import asyncio
-from pandas import DataFrame, merge, json_normalize
+from pandas import DataFrame, merge, json_normalize, concat
 
 def load_data(pco):
   
@@ -8,18 +8,19 @@ def load_data(pco):
       people_attr_df = []
       people_rels_df = []
       people_data_df = []
-      people_include_df = []
+      people_include_df = DataFrame()
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
         #people_attr_df.append(person['data']['attributes'])
         #people_rels_df.append(person['data']['relationships'])
         people_data_df.append(person['data'])
-        people_include_df.append(person['included'])
+        people_include_df = concat([people_include_df, json_normalize(person['included'])])
+        #people_include_df.append(person['included'])
         
       #people_attr_df=DataFrame(people_attr_df)
       #people_rels_df=DataFrame(people_rels_df)
       
       #people_include_df=json_normalize(people_include_df)
-      people_data_df=json_normalize(people_data_df)
+      #people_data_df=json_normalize(people_data_df)
       
       #people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
       #people_df = people_df.merge(people_include_df, left_index=True, right_index=True)
