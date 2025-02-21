@@ -18,7 +18,7 @@ def load_data(pco):
       #people_attr_df=DataFrame(people_attr_df)
       #people_rels_df=DataFrame(people_rels_df)
       
-      people_include_df=json_normalize(people_include_df)
+      #people_include_df=json_normalize(people_include_df)
       people_data_df=json_normalize(people_data_df)
       
       #people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
