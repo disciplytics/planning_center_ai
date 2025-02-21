@@ -99,15 +99,19 @@ def load_data(pco):
                               left_index=True, 
                               right_index=True
                             )
-  
+
+      # clean household data
+      people_household_df = people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()
+      people_household_df = people_household_df[['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact', 'relationships.people.data', 'attributes.name']]
       # do joins
       # household data
       people_data_df = pd.merge(
             people_data_df,
-            people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()[['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact', 'relationships.people.data', 'attributes.name']],
+            people_household_df,
             left_on = 'relationships.households.data.id',
             right_on = 'id' 
         )
+      del people_household_df
                             
         
       return people_data_df
