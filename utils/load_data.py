@@ -91,8 +91,14 @@ def load_data(pco):
                      'attributes.e164', 'attributes.international', 'attributes.national']
       """
       people_data_df = people_data_df.explode('relationships.households.data')
-      #people_data_df[['relationships.households.data.type', 'relationships.households.data.id']] = pd.json_normalize(people_data_df['relationships.households.data'])
-      return pd.json_normalize(people_data_df['relationships.households.data'])
+      people_data_df = people_data_df.reset_index(drop=True)
+      people_data_df = pd.merge(
+                            people_data_df, 
+                            pd.json_normalize(people_data_df['relationships.households.data']),
+                            left_index=True, 
+                            right_index=True
+                          )
+      return people_data_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
