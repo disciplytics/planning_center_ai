@@ -42,4 +42,4 @@ else:
                 st.write(st.session_state.headcounts_df)
                 
         with giving_col.container(border=True):
-                st.write("Giving Metrics")
+                st.subheader("Giving Metrics")
