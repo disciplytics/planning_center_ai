@@ -2,7 +2,7 @@ import asyncio
 import pandas as pd
 
 def load_data(pco):
-  
+  '''
   async def fetch_peopl_data(query_date = None):
     try:
       people_data_df = pd.DataFrame()
@@ -18,6 +18,7 @@ def load_data(pco):
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
       return e.status_code
+      '''
 
   async def fetch_people_data(query_date = None):
     try:
