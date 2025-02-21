@@ -91,8 +91,8 @@ def load_data(pco):
                      'attributes.e164', 'attributes.international', 'attributes.national']
       """
       people_data_df = people_data_df.explode('relationships.households.data')
-      people_data_df[['relationships.households.data.type', 'relationships.households.data.id']] = pd.json_normalize(people_data_df['relationships.households.data'])
-      return people_data_df
+      #people_data_df[['relationships.households.data.type', 'relationships.households.data.id']] = pd.json_normalize(people_data_df['relationships.households.data'])
+      return people_data_df.explode('relationships.households.data')
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
