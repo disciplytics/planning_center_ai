@@ -29,7 +29,7 @@ else:
         headcount_col, giving_col = st.columns(2)
         
         with headcount_col.container(border=True):
-                st.write("Headcount Metrics")
+                st.subheader("Headcount Metrics")
                 st.bar_chart(data=hc_trend_df, x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
                 st.write(hc_trend_df)
                 st.write(st.session_state.headcounts_df)
