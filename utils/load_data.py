@@ -80,14 +80,17 @@ def load_data(pco):
       people_phonenumber_df = people_include_df[people_include_df['type'] == 'PhoneNumber'].drop_duplicates()
 
       Join:
-      people_data_df[''] == people_phonenumber_df['id']
+      people_data_df['id'] == people_phonenumber_df['relationships.person.data.id']
       
-      Keep columns: ['id', 'attributes.value']
+      Keep columns: ['id', 'attributes.location', 'attributes.primary', 'relationships.person.data.id'
+                     'attributes.number']
                      
-      Drop columns: ['type', 'links.self']
+      Drop columns: ['type', 'id', 'links.self', 'attributes.created_at', 'attributes.updated_at',
+                     'relationships.person.data.type', 'attributes.country_code', 'attributes.carrier',
+                     'attributes.e164', 'attributes.international', 'attributes.national']
       """
       
-      return people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
+      return people_data_df#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
       
     except Exception as e:
       # handle the exception
