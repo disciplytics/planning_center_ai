@@ -21,6 +21,9 @@ else:
             st.write("Giving Metrics")
         
             st.write(st.session_state.people_df)
+            st.write(st.session_state.donations_df)
+
+ 
         
         #st.dataframe(st.session_state.households_df)
         #st.write(st.session_state.donations_df)
