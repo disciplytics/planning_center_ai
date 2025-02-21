@@ -28,7 +28,7 @@ else:
                         data = data.groupby(['Headcount Type', 'attributes.starts_at_at'])['attributes.total'].sum().reset_index()
                         return data
                 hc_trend_df = headcounts_trend(st.session_state.headcounts_df)
-                st.bar_chart(data=, x='attributes.starts_at_at', y='attributes.total', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
+                st.bar_chart(data=hc_trend_df, x='attributes.starts_at_at', y='attributes.total', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
         
                 st.write(hc_trend_df)
                 st.write(st.session_state.headcounts_df)
