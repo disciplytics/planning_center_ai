@@ -23,7 +23,7 @@ def load_data(pco):
       
       #people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
       #people_df = people_df.merge(people_include_df, left_index=True, right_index=True)
-      return people_data_df.merge(people_include_df, left_index=True, right_index=True)
+      return people_include_df#people_data_df.merge(people_include_df, left_index=True, right_index=True)
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
