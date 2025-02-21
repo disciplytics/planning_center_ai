@@ -27,7 +27,7 @@ def load_data(pco):
         headcounts_include_df = pd.concat([headcounts_include_df, pd.json_normalize(headcount['included'])])
 
       headcounts_data_df = headcounts_data_df.reset_index(drop=True)
-      headcounts_include_df = headcounts_include_df.reset_index(drop=True)
+      headcounts_include_df = headcounts_include_df.reset_index(drop=True).drop_duplicates()
 
       headcounts_df = pd.merge(
                         headcounts_data_df, 
