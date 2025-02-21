@@ -66,7 +66,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await fetch_headcounts_data()#, await fetch_donations_data()
+    return await fetch_headcounts_data()
 
   
   return asyncio.run(main())
