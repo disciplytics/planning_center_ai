@@ -89,8 +89,8 @@ def load_data(pco):
                      'relationships.person.data.type', 'attributes.country_code', 'attributes.carrier',
                      'attributes.e164', 'attributes.international', 'attributes.national']
       """
-      
-      return pd.json_normalize(people_data_df['relationships.households.data'])#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
+      people_data_df[['household_id', 'household_type']] = [itemgetter('id','type',)(x) for x in people_data_df['relationships.households.data'].to_list()]
+      return people_data_df#pd.json_normalize(people_data_df['relationships.households.data'])#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
       
     except Exception as e:
       # handle the exception
