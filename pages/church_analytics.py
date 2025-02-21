@@ -18,7 +18,7 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
 if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:        
-        #@st.cache_data
+        @st.cache_data
         def headcounts_trend(data):
                 data['Headcount Type'] = data['attributes.name_at']
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])
@@ -26,7 +26,7 @@ else:
                 return data.groupby(['Headcount Type', 'Date'])['Headcounts'].sum().reset_index()
         hc_trend_df = headcounts_trend(st.session_state.headcounts_df)
         
-        with st.container():
+        with st.container(border=True):
                 st.write("Headcount Metrics")
                 st.bar_chart(data=hc_trend_df, x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
                 st.write(hc_trend_df)
