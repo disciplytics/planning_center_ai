@@ -69,9 +69,11 @@ def load_data(pco):
       Join:
       people_data_df[''] == people_organization_df['id']
       
-      Keep columns: ['id', 'attributes.value']
+      Keep columns: ['id', 'attributes.name']
                      
-      Drop columns: ['type', 'links.self']
+      Drop columns: ['type', 'links.self', 'attributes.created_at', 'attributes.country_code',
+                     'attributes.date_format', 'attributes.time_zone', 'attributes.contact_website',
+                     'attributes.avatar_url']
 
       PhoneNumber:
       Where statement:
@@ -85,7 +87,7 @@ def load_data(pco):
       Drop columns: ['type', 'links.self']
       """
       
-      return people_include_df[people_include_df['type'] == 'Organization'].dropna(axis=1, how='all')
+      return people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
       
     except Exception as e:
       # handle the exception
