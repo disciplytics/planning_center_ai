@@ -10,7 +10,18 @@ def load_data(pco):
         people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
         people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
 
-      # Email, Address: has people id, 
+      """
+      Household:
+      join to people_data_df. == people_include_df[people_include_df['type'] == 'Household'].dropna(axis=1, how='all')['id']
+      Keep columns: ['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact',
+                     'relationships.people.data', 'attributes.name']
+      Drop columns: ['type', 'attributes.created_at', 'attributes.updated_at', 'links.self', 'attributes.avatar',
+                    
+      
+      ]
+
+      """
+      # Email, Address: has people id, Household: id
 
       return people_include_df[people_include_df['type'] == 'Household'].dropna(axis=1, how='all')#{'data':people_data_df.columns, 'included':people_include_df.columns}
     except Exception as e:
