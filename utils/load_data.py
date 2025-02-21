@@ -2,7 +2,6 @@ import asyncio
 import pandas as pd
 
 def load_data(pco):
-  '''
   async def fetch_peopl_data(query_date = None):
     try:
       people_data_df = pd.DataFrame()
@@ -18,9 +17,8 @@ def load_data(pco):
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
       return e.status_code
-      '''
 
-  async def fetch_people_data(query_date = None):
+  async def fetch_headcounts_data(query_date = None):
     try:
       headcounts_data_df = pd.DataFrame()
       headcounts_include_df = pd.DataFrame()
@@ -30,7 +28,24 @@ def load_data(pco):
 
       headcounts_data_df = headcounts_data_df.reset_index(drop=True)
       headcounts_include_df = headcounts_include_df.reset_index(drop=True)
-      return headcounts_data_df, headcounts_include_df
+
+      headcounts_df = pd.merge(
+                        headcounts_data_df, 
+                        headcounts_include_df[headcounts_include_df['type'] == 'EventTime'],
+                        left_on = 'relationships.event_time.data.id',
+                        right_on = 'id',
+                        suffixes=('_data', '_et')
+                                          )
+
+      headcounts_df = pd.merge(
+                        headcounts_df, 
+                        headcounts_include_df[headcounts_include_df['type'] == 'AttendanceType'],
+                        left_on = 'relationships.attendance_type.data.id',
+                        right_on = 'id',
+                        suffixes=('', '_at')
+                                          )
+        
+      return headcounts_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
@@ -51,7 +66,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await fetch_people_data()#, await fetch_donations_data()
+    return await fetch_headcounts_data()#, await fetch_donations_data()
 
   
   return asyncio.run(main())
