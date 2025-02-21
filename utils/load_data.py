@@ -4,20 +4,13 @@ import pandas as pd
 def load_data(pco):
   
   async def fetch_people_data():
-    try:
-      people_data_df = pd.DataFrame()
-      people_include_df = pd.DataFrame()
-      for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
-        people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
-
       """
       Household:
       Where statement:
       people_household_df = people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()
 
       Join:
-      people_data_df['id'] == people_household_df['']
+      people_data_df['relationships.households.data.id'] == people_household_df['id']
       
       Keep columns: ['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact',
                      'relationships.people.data', 'attributes.name']
@@ -90,6 +83,14 @@ def load_data(pco):
                      'relationships.person.data.type', 'attributes.country_code', 'attributes.carrier',
                      'attributes.e164', 'attributes.international', 'attributes.national']
       """
+    try:
+      people_data_df = pd.DataFrame()
+      people_include_df = pd.DataFrame()
+      for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
+        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
+        people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
+
+      # explode household data
       people_data_df = people_data_df.explode('relationships.households.data')
       people_data_df = people_data_df.reset_index(drop=True)
       people_data_df = pd.merge(
@@ -98,6 +99,17 @@ def load_data(pco):
                             left_index=True, 
                             right_index=True
                           )
+
+      # do joins
+      # household data
+      people_data_df = pd.merge(
+          people_data_df,
+          people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()[['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact', 'relationships.people.data', 'attributes.name']],
+          left_on = 'relationships.households.data.id',
+          right_on = 'id' 
+      )
+                          
+      
       return people_data_df
     except Exception as e:
       # handle the exception
