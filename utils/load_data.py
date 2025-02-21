@@ -4,7 +4,7 @@ import pandas as pd
 def load_data(pco):
   
   async def fetch_people_data():
-      """
+    """
       Household:
       Where statement:
       people_household_df = people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()
@@ -82,27 +82,27 @@ def load_data(pco):
       Drop columns: ['type', 'id', 'links.self', 'attributes.created_at', 'attributes.updated_at',
                      'relationships.person.data.type', 'attributes.country_code', 'attributes.carrier',
                      'attributes.e164', 'attributes.international', 'attributes.national']
-      """
-      try:
-        people_data_df = pd.DataFrame()
-        people_include_df = pd.DataFrame()
-        for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-          people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
-          people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
+    """
+    try:
+      people_data_df = pd.DataFrame()
+      people_include_df = pd.DataFrame()
+      for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
+        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
+        people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
   
-        # explode household data
-        people_data_df = people_data_df.explode('relationships.households.data')
-        people_data_df = people_data_df.reset_index(drop=True)
-        people_data_df = pd.merge(
+      # explode household data
+      people_data_df = people_data_df.explode('relationships.households.data')
+      people_data_df = people_data_df.reset_index(drop=True)
+      people_data_df = pd.merge(
                               people_data_df, 
                               pd.json_normalize(people_data_df['relationships.households.data']).rename(columns={'type':'relationships.households.data.type','id':'relationships.households.data.id'}),
                               left_index=True, 
                               right_index=True
                             )
   
-        # do joins
-        # household data
-        people_data_df = pd.merge(
+      # do joins
+      # household data
+      people_data_df = pd.merge(
             people_data_df,
             people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()[['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact', 'relationships.people.data', 'attributes.name']],
             left_on = 'relationships.households.data.id',
