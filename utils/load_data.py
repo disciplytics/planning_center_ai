@@ -12,7 +12,12 @@ def load_data(pco):
 
       """
       Household:
-      join to people_data_df. == people_include_df[people_include_df['type'] == 'Household'].dropna(axis=1, how='all')['id']
+      Where statement:
+      people_household_df = people_include_df[people_include_df['type'] == 'Household']
+
+      Join:
+      people_data_df['id'] == people_household_df['']
+      
       Keep columns: ['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact',
                      'relationships.people.data', 'attributes.name']
                      
@@ -20,7 +25,12 @@ def load_data(pco):
                      'relationships.primary_contact.data.type', 'relationships.primary_contact.data.id',]
 
       Email:
-      join to people_data_df['id'] == people_include_df[people_include_df['type'] == 'Email'].dropna(axis=1, how='all')['relationships.person.data.id']
+      Where statement:
+      people_email_df = people_include_df[people_include_df['type'] == 'Email']
+
+      Join:
+      people_data_df['id'] == people_email_df['relationships.person.data.id']
+      
       Keep columns: ['attributes.address', 'attributes.blocked', 'attributes.location', 
                      'attributes.primary', 'relationships.people.data.id']
                      
@@ -28,11 +38,17 @@ def load_data(pco):
                      'links.self', 'relationships.person.data.type']
 
       Address:
-      join to people_data_df['id'] == people_include_df[people_include_df['type'] == 'Address'].dropna(axis=1, how='all')['relationships.person.data.id']
-      Keep columns: ['attributes.address', 'attributes.blocked', 'attributes.location', 
-                     'attributes.primary', 'relationships.people.data.id']
+      Where statement:
+      people_address_df = people_include_df[people_include_df['type'] == 'Address']
+
+      Join:
+      people_data_df['id'] == people_address_df['relationships.person.data.id']
+
+      Keep columns: ['attributes.address', 'attributes.primary', 'relationships.people.data.id',
+                     'attributes.street_line_1', 'attributes.street_line_2', 'attributes.city',
+                     'attributes.state', 'attributes.zip', 'attributes.country_code', 'attributes.country_name']
                      
-      Drop columns: ['type', 'id', 'attributes.created_at', 'attributes.updated_at', 
+      Drop columns: ['type', 'id', 'attributes.created_at', 'attributes.updated_at', 'attributes.location', 
                      'links.self', 'relationships.person.data.type']
                      
       """
