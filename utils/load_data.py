@@ -29,7 +29,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await fetch_people_data(), await fetch_households_data(), await fetch_donations_data()
+    return await fetch_people_data(), await fetch_donations_data()
 
   
   return asyncio.run(main())
