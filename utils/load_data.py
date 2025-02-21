@@ -94,7 +94,7 @@ def load_data(pco):
       people_data_df = people_data_df.reset_index(drop=True)
       people_data_df = pd.merge(
                             people_data_df, 
-                            pd.json_normalize(people_data_df['relationships.households.data']),
+                            pd.json_normalize(people_data_df['relationships.households.data']).rename(columns={'type':'relationships.households.data.type','id':'relationships.households.data.id'}),
                             left_index=True, 
                             right_index=True
                           )
