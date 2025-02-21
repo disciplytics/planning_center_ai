@@ -22,7 +22,7 @@ else:
         def headcounts_trend(data):
                 data['Headcount Type'] = data['attributes.name_at']
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])#.astype('int32')
-                data['Date'] = pd.to_datetime(data['attributes.starts_at_at'].str[:10])#.astype('datetime64[ns]')
+                data['Date'] = data['attributes.starts_at_at'].str[:10]#pd.to_datetime()#.astype('datetime64[ns]')
                 return data[['Headcount Type', 'Date', 'Headcounts']]#.groupby(['Headcount Type', 'Date'])['Headcounts'].sum().reset_index()
         hc_trend_df = headcounts_trend(st.session_state.headcounts_df)
         
