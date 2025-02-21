@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.auth import pcoAuth
+from reports.attendance import attendance_trend
 import pandas as pd
 
 # PAGE CONGIG
@@ -19,6 +20,8 @@ if 'token' not in st.session_state:
 else:        
         with st.container():
             st.write("Headcount Metrics")
+            attendance_trend(st.session_state.headcounts_df)
+        
         
             st.write(st.session_state.headcounts_df)
 
