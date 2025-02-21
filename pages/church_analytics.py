@@ -34,7 +34,7 @@ else:
         
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
-                times = pd.unique(hc_trend_df['Event Time'])
+                times = pd.unique(hc_trend_df['Event Time']).sort()
                 selection = st.pills("Event Times", times, selection_mode="multi")
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 trend_tab.bar_chart(data=hc_trend_df, x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
