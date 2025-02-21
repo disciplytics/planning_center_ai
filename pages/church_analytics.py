@@ -24,7 +24,7 @@ else:
                 data['Headcount Type'] = data['attributes.name_at']
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])
                 data['Date'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.date
-                data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour'])
+                data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour']).astype(int)
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'])
                 data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
                 return data.groupby(['Headcount Type', 'Date', 'Event Time'])['Headcounts'].sum().reset_index()
@@ -34,7 +34,7 @@ else:
         
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
-                times = pd.unique(['Event Time'])
+                times = pd.unique(hc_trend_df['Event Time'])
                 selection = st.pills("Event Times", times, selection_mode="multi")
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 trend_tab.bar_chart(data=hc_trend_df, x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
