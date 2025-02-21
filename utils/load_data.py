@@ -1,19 +1,14 @@
 import asyncio
-from pandas import DataFrame, merge, json_normalize, concat
-
+import pandas as pd
 def load_data(pco):
   
   async def fetch_people_data():
     try:
-      people_attr_df = []
-      people_rels_df = []
       people_data_df = []
-      people_include_df = DataFrame()
+      people_include_df = pd.DataFrame()
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
-        #people_attr_df.append(person['data']['attributes'])
-        #people_rels_df.append(person['data']['relationships'])
-        people_data_df.append(person['data'])
-        people_include_df = concat([people_include_df, json_normalize(person['included'])])
+        #people_data_df.append(person['data'])
+        people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
         #people_include_df.append(person['included'])
         
       #people_attr_df=DataFrame(people_attr_df)
