@@ -102,7 +102,7 @@ def load_data(pco):
 
       # clean household data
       people_household_df = people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()
-      people_household_df = people_household_df[['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact', 'relationships.people.data', 'attributes.name']]
+      #people_household_df = people_household_df[['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact', 'relationships.people.data', 'attributes.name']]
       # do joins
       # household data
       people_data_df = pd.merge(
