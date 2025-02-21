@@ -19,7 +19,7 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
         width = 250)
 
 # PAGE TITLE
-st.title("Planning Center Integration")
+st.write("Planning Center Integration")
 
 
 # PCO AUTH 
@@ -32,13 +32,11 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
         # load data from pco
-        st.session_state.people_df, st.session_state.households_df, st.session_state.donations_df = load_data(pco)
-        #st.session_state.people_df, st.session_state.households_df = load_data(pco)
+        st.session_state.people_df,  st.session_state.donations_df = load_data(pco)
 
         logout = st.button("Log out of Planning Center")
         if logout:
                 del st.session_state["token"]
                 del st.session_state["people_df"]
-                del st.session_state["households_df"]
                 del st.session_state["donations_df"]
                 st.rerun()
