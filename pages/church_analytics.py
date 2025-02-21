@@ -26,7 +26,7 @@ else:
                 data['Date'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.date
                 data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour'])
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'])
-                data['Event Time'] = data['hour'].astype(str) + ":" data['minute'].astype(str)
+                data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
                 return data.groupby(['Headcount Type', 'Date', 'Event Time'])['Headcounts'].sum().reset_index()
         hc_trend_df = headcounts_trend(st.session_state.headcounts_df)
 
