@@ -56,7 +56,7 @@ def load_data(pco):
       people_maritalstatus_df = people_include_df[people_include_df['type'] == 'MaritalStatus'].drop_duplicates()
 
       Join:
-      people_data_df[''] == people_maritalstatus_df['id']
+      people_data_df['relationships.marital_status.data.id'] == people_maritalstatus_df['id']
       
       Keep columns: ['id', 'attributes.value']
                      
@@ -67,7 +67,7 @@ def load_data(pco):
       people_organization_df = people_include_df[people_include_df['type'] == 'Organization'].drop_duplicates()
 
       Join:
-      people_data_df[''] == people_organization_df['id']
+      people_data_df['relationships.organization.data.id'] == people_organization_df['id']
       
       Keep columns: ['id', 'attributes.name']
                      
@@ -90,7 +90,7 @@ def load_data(pco):
                      'attributes.e164', 'attributes.international', 'attributes.national']
       """
       
-      return people_data_df#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
+      return people_data_df['relationships.households.data']#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
       
     except Exception as e:
       # handle the exception
