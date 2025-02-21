@@ -54,7 +54,7 @@ def load_data(pco):
       """
       # Email, Address: has people id, Household: id
 
-      return people_include_df[people_include_df['type'] == 'Address'].dropna(axis=1, how='all')#{'data':people_data_df.columns, 'included':people_include_df.columns}
+      return people_data_df#people_include_df[people_include_df['type'] == 'Address'].dropna(axis=1, how='all')#{'data':people_data_df.columns, 'included':people_include_df.columns}
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
