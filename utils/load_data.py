@@ -3,7 +3,7 @@ import pandas as pd
 
 def load_data(pco):
   
-  async def fetch_people_data(query_date = None):
+  async def fetch_peopl_data(query_date = None):
     try:
       people_data_df = pd.DataFrame()
       people_include_df = pd.DataFrame()
@@ -18,6 +18,25 @@ def load_data(pco):
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
       return e.status_code
+
+  async def fetch_people_data(query_date = None):
+    try:
+      headcounts_data_df = pd.DataFrame()
+      headcounts_include_df = pd.DataFrame()
+      for headcount in pco.iterate('/check-ins/v2/headcounts?include=attendance_type,event_time'):
+        headcounts_data_df = pd.concat([headcounts_data_df, pd.json_normalize(headcount['data'])])
+        headcounts_include_df = pd.concat([headcounts_include_df, pd.json_normalize(headcount['included'])])
+
+      headcounts_data_df = headcounts_data_df.reset_index(drop=True)
+      headcounts_include_df = headcounts_include_df.reset_index(drop=True)
+      return headcounts_include_df
+    except Exception as e:
+      # handle the exception
+      error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
+      return e.status_code
+
+
+  
 
   async def fetch_donations_data():
     try:
