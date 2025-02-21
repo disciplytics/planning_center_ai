@@ -30,7 +30,7 @@ def load_data(pco):
 
       headcounts_data_df = headcounts_data_df.reset_index(drop=True)
       headcounts_include_df = headcounts_include_df.reset_index(drop=True)
-      return headcounts_include_df
+      return headcounts_data_df, headcounts_include_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
@@ -51,7 +51,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await fetch_people_data(), await fetch_donations_data()
+    return await fetch_people_data()#, await fetch_donations_data()
 
   
   return asyncio.run(main())
