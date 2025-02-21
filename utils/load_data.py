@@ -13,7 +13,7 @@ def load_data(pco):
       """
       Household:
       Where statement:
-      people_household_df = people_include_df[people_include_df['type'] == 'Household']
+      people_household_df = people_include_df[people_include_df['type'] == 'Household'].drop_duplicates()
 
       Join:
       people_data_df['id'] == people_household_df['']
@@ -26,7 +26,7 @@ def load_data(pco):
 
       Email:
       Where statement:
-      people_email_df = people_include_df[people_include_df['type'] == 'Email']
+      people_email_df = people_include_df[people_include_df['type'] == 'Email'].drop_duplicates()
 
       Join:
       people_data_df['id'] == people_email_df['relationships.person.data.id']
@@ -39,7 +39,7 @@ def load_data(pco):
 
       Address:
       Where statement:
-      people_address_df = people_include_df[people_include_df['type'] == 'Address']
+      people_address_df = people_include_df[people_include_df['type'] == 'Address'].drop_duplicates()
 
       Join:
       people_data_df['id'] == people_address_df['relationships.person.data.id']
@@ -50,11 +50,43 @@ def load_data(pco):
                      
       Drop columns: ['type', 'id', 'attributes.created_at', 'attributes.updated_at', 'attributes.location', 
                      'links.self', 'relationships.person.data.type']
-                     
-      """
-      # MaritalStatus Organization PhoneNumber
 
-      return people_include_df[people_include_df['type'] == 'MaritalStatus'].dropna(axis=1, how='all')#{'data':people_data_df.columns, 'included':people_include_df.columns}
+      MaritalStatus:
+      Where statement:
+      people_maritalstatus_df = people_include_df[people_include_df['type'] == 'MaritalStatus'].drop_duplicates()
+
+      Join:
+      people_data_df[''] == people_maritalstatus_df['id']
+      
+      Keep columns: ['id', 'attributes.value']
+                     
+      Drop columns: ['type', 'links.self']
+
+      Organization:
+      Where statement:
+      people_organization_df = people_include_df[people_include_df['type'] == 'Organization'].drop_duplicates()
+
+      Join:
+      people_data_df[''] == people_organization_df['id']
+      
+      Keep columns: ['id', 'attributes.value']
+                     
+      Drop columns: ['type', 'links.self']
+
+      PhoneNumber:
+      Where statement:
+      people_phonenumber_df = people_include_df[people_include_df['type'] == 'PhoneNumber'].drop_duplicates()
+
+      Join:
+      people_data_df[''] == people_phonenumber_df['id']
+      
+      Keep columns: ['id', 'attributes.value']
+                     
+      Drop columns: ['type', 'links.self']
+      """
+      
+      return people_include_df[people_include_df['type'] == 'Organization'].dropna(axis=1, how='all')
+      
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
