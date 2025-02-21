@@ -19,11 +19,11 @@ if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:        
         with st.container():
-            st.write("Headcount Metrics")
-            attendance_trend(st.session_state.headcounts_df)
+                st.write("Headcount Metrics")
+                attendance_trend(st.session_state.headcounts_df)
         
         
-            st.write(st.session_state.headcounts_df)
+                st.write(st.session_state.headcounts_df)
 
  
         
