@@ -9,10 +9,8 @@ def load_data(pco):
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus'):
         people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
         people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
-              
-      #people_df = people_attr_df.merge(people_rels_df, left_index=True, right_index=True)
-      #people_df = people_df.merge(people_include_df, left_index=True, right_index=True)
-      return people_data_df#people_data_df.merge(people_include_df, left_index=True, right_index=True)
+
+      return [people_data_df.columns + people_include_df.columns]
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
