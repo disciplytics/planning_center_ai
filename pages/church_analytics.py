@@ -20,7 +20,7 @@ else:
         with st.container():
             st.write("Giving Metrics")
         
-            st.write(st.session_state.people_df)
+            st.write(st.session_state.headcounts_df)
             st.write(st.session_state.donations_df)
 
  
