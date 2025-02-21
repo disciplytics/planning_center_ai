@@ -18,10 +18,9 @@ if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:        
         with st.container():
-            st.write("Giving Metrics")
+            st.write("Headcount Metrics")
         
             st.write(st.session_state.headcounts_df)
-            st.write(st.session_state.donations_df)
 
  
         
