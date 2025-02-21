@@ -3,7 +3,7 @@ import pandas as pd
 
 def load_data(pco):
   
-  async def fetch_people_data(query_date: None):
+  async def fetch_people_data(query_date = None):
     try:
       people_data_df = pd.DataFrame()
       people_include_df = pd.DataFrame()
