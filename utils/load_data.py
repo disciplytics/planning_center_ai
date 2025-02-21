@@ -15,13 +15,30 @@ def load_data(pco):
       join to people_data_df. == people_include_df[people_include_df['type'] == 'Household'].dropna(axis=1, how='all')['id']
       Keep columns: ['id', 'attributes.member_count', 'attributes.primary_contact_id', 'attributes.primary_contact',
                      'relationships.people.data', 'attributes.name']
+                     
       Drop columns: ['type', 'attributes.created_at', 'attributes.updated_at', 'links.self', 'attributes.avatar',
                      'relationships.primary_contact.data.type', 'relationships.primary_contact.data.id',]
 
+      Email:
+      join to people_data_df['id'] == people_include_df[people_include_df['type'] == 'Email'].dropna(axis=1, how='all')['relationships.person.data.id']
+      Keep columns: ['attributes.address', 'attributes.blocked', 'attributes.location', 
+                     'attributes.primary', 'relationships.people.data.id']
+                     
+      Drop columns: ['type', 'id', 'attributes.created_at', 'attributes.updated_at', 
+                     'links.self', 'relationships.person.data.type']
+
+      Address:
+      join to people_data_df['id'] == people_include_df[people_include_df['type'] == 'Address'].dropna(axis=1, how='all')['relationships.person.data.id']
+      Keep columns: ['attributes.address', 'attributes.blocked', 'attributes.location', 
+                     'attributes.primary', 'relationships.people.data.id']
+                     
+      Drop columns: ['type', 'id', 'attributes.created_at', 'attributes.updated_at', 
+                     'links.self', 'relationships.person.data.type']
+                     
       """
       # Email, Address: has people id, Household: id
 
-      return people_include_df[people_include_df['type'] == 'Email'].dropna(axis=1, how='all')#{'data':people_data_df.columns, 'included':people_include_df.columns}
+      return people_include_df[people_include_df['type'] == 'Address'].dropna(axis=1, how='all')#{'data':people_data_df.columns, 'included':people_include_df.columns}
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
