@@ -90,7 +90,7 @@ def load_data(pco):
                      'attributes.e164', 'attributes.international', 'attributes.national']
       """
       
-      return pd.json_normalize(people_data_df[['relationships.households.data']])#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
+      return pd.json_normalize(people_data_df['relationships.households.data'])#people_include_df[people_include_df['type'] == 'PhoneNumber'].dropna(axis=1, how='all').drop_duplicates()
       
     except Exception as e:
       # handle the exception
