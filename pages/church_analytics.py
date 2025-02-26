@@ -25,7 +25,7 @@ else:
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])
                 data['Date'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.date
                 data['week_of_year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.isocalendar().week
-                data['Year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.year
+                data['Year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.year.astype(str)
                 data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour']).astype(int)
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'])
                 data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
