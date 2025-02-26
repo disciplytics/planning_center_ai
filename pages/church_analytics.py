@@ -45,7 +45,7 @@ else:
                         color='Headcount Type',)
                 
                 yoy_tab.line_chart(
-                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes))].groupby(['Year', 'week_of_year'])[metric].sum().reset_index(), 
+                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes))].groupby(['Year', 'Week of Year'])[metric].sum().reset_index(), 
                         x='Week of Year', 
                         y=metric, 
                         x_label='Week of Year', 
@@ -57,7 +57,6 @@ else:
         
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
-                timeCol, hcCol, mCol = st.columns(3)
                 
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
@@ -70,8 +69,6 @@ else:
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
-                st.write(hc_trend_df)
-                st.write(st.session_state.headcounts_df)
-                
+
         with giving_col.container(border=True):
                 st.subheader("Giving Metrics")
