@@ -37,10 +37,13 @@ else:
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
-                selection = st.pills("Event Times", times, selection_mode="multi", default=times)
+                timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
+                types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
+                headcountTypes = st.pills("Headcount Type", times, selection_mode="multi", default=types)
+                
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
-                trend_tab.bar_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)
-                yoy_tab.line_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)].groupby(['Year', 'week_of_year'])['Headcounts'].sum().reset_index(), x='week_of_year', y='Headcounts', x_label='Week of Year', y_label='Headcounts', color='Year',)
+                trend_tab.bar_chart(data=hc_trend_df[(hc_trend_df['Event Time'].isin(timeSelection)) & (hc_trend_df['Event Time'].isin(headcountTypes))], x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)
+                yoy_tab.line_chart(data=hc_trend_df[(hc_trend_df['Event Time'].isin(timeSelection)) & (hc_trend_df['Event Time'].isin(headcountTypes))].groupby(['Year', 'week_of_year'])['Headcounts'].sum().reset_index(), x='week_of_year', y='Headcounts', x_label='Week of Year', y_label='Headcounts', color='Year',)
                 st.write(hc_trend_df)
                 st.write(st.session_state.headcounts_df)
                 
