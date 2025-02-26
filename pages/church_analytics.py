@@ -63,7 +63,7 @@ else:
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
                 
-                with st.expander("Filters:"):
+                with st.expander("Filters", icon=":material/filter_alt:"):
                         timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
                         headcountTypes = st.pills("Headcount Type", types, selection_mode="multi", default=types)
                         metricTypes = st.pills("Metric", metrics, selection_mode="single", default='Headcounts')
