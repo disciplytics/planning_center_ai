@@ -63,7 +63,7 @@ else:
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
                 headcountTypes = hcCol.pills("Headcount Type", types, selection_mode="multi", default=types)
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
-                metricTypes = mCol.pills("Headcount Type", metrics, selection_mode="single", default='Headcounts')
+                metricTypes = mCol.pills("Metric", metrics, selection_mode="single", default='Headcounts')
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
