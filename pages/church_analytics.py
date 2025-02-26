@@ -59,7 +59,8 @@ else:
                 st.subheader("Headcount Metrics")
                 timeCol, hcCol, mCol = st.columns(3)
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
-                timeSelection = timeCol.pills("Event Times", times, selection_mode="multi", default=times)
+                with st.expander("Event Time Filter"):
+                        timeSelection = timeCol.pills("Event Times", times, selection_mode="multi", default=times)
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
                 headcountTypes = hcCol.pills("Headcount Type", types, selection_mode="multi", default=types)
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
