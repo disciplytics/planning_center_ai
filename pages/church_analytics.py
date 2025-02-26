@@ -23,13 +23,16 @@ else:
         def headcounts_data(data):
                 data['Headcount Type'] = data['attributes.name_at']
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])
+                data['Guest Count'] = pd.to_numeric(data['attributes.guest_count'])
+                data['Regular Count'] = pd.to_numeric(data['attributes.regular_count'])
+                data['Volunteer Count'] = pd.to_numeric(data['attributes.volunteer_count'])
                 data['Date'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.date
                 data['week_of_year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.isocalendar().week
                 data['Year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.year.astype(str)
                 data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour']).astype(int)
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'])
                 data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
-                return data.groupby(['Headcount Type', 'week_of_year', 'Year', 'Date', 'Event Time'])['Headcounts'].sum().reset_index()
+                return data.groupby(['Headcount Type', 'week_of_year', 'Year', 'Date', 'Event Time'])[['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']].sum().reset_index()
         hc_trend_df = headcounts_data(st.session_state.headcounts_df)
 
         def headcounts_analysis(data, metric):
