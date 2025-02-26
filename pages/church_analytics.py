@@ -58,13 +58,15 @@ else:
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
                 timeCol, hcCol, mCol = st.columns(3)
+                
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
-                with st.expander("Event Time Filter"):
-                        timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
-                headcountTypes = hcCol.pills("Headcount Type", types, selection_mode="multi", default=types)
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
-                metricTypes = mCol.pills("Metric", metrics, selection_mode="single", default='Headcounts')
+                
+                with st.expander("Filters:"):
+                        timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
+                        headcountTypes = st.pills("Headcount Type", types, selection_mode="multi", default=types)
+                        metricTypes = st.pills("Metric", metrics, selection_mode="single", default='Headcounts')
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
