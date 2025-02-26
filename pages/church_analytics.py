@@ -24,6 +24,8 @@ else:
                 data['Headcount Type'] = data['attributes.name_at']
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])
                 data['Date'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.date
+                data['week_of_year'] = data['Date'].dt.isocalendar().week
+                data['Year'] = data['Date'].dt.year
                 data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour']).astype(int)
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'])
                 data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
@@ -37,7 +39,8 @@ else:
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
                 selection = st.pills("Event Times", times, selection_mode="multi", default=times)
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
-                trend_tab.bar_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)# horizontal=False, stack=None, width=None, height=None, use_container_width=True)
+                trend_tab.bar_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)
+                yoy_tab.bar_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='week_of_year', y='Headcounts', x_label='Week of Year', y_label='Headcounts', color='Year',)
                 st.write(hc_trend_df)
                 st.write(st.session_state.headcounts_df)
                 
