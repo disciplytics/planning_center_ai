@@ -22,7 +22,7 @@ def load_data(pco):
     try:
       headcounts_data_df = pd.DataFrame()
       headcounts_include_df = pd.DataFrame()
-      for headcount in pco.iterate('/check-ins/v2/headcounts?include=attendance_type,event_time'):
+      for headcount in pco.iterate('/check-ins/v2/headcounts?include=attendance_type,event_time&where[updated_at][gte]=2024-01-01'):
         headcounts_data_df = pd.concat([headcounts_data_df, pd.json_normalize(headcount['data'])])
         headcounts_include_df = pd.concat([headcounts_include_df, pd.json_normalize(headcount['included'])])
 
