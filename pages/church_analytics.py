@@ -40,7 +40,7 @@ else:
                 selection = st.pills("Event Times", times, selection_mode="multi", default=times)
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 trend_tab.bar_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)
-                yoy_tab.bar_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='week_of_year', y='Headcounts', x_label='Week of Year', y_label='Headcounts', color='Year',)
+                yoy_tab.line_chart(data=hc_trend_df[hc_trend_df['Event Time'].isin(selection)], x='week_of_year', y='Headcounts', x_label='Week of Year', y_label='Headcounts', color='Year',)
                 st.write(hc_trend_df)
                 st.write(st.session_state.headcounts_df)
                 
