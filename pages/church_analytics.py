@@ -36,10 +36,11 @@ else:
         
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
+                timeCol, hcCol = st.columns(2)
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
-                timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
+                timeSelection = timeCol.pills("Event Times", times, selection_mode="multi", default=times)
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
-                headcountTypes = st.pills("Headcount Type", types, selection_mode="multi", default=types)
+                headcountTypes = hcCol.pills("Headcount Type", types, selection_mode="multi", default=types)
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 trend_tab.bar_chart(data=hc_trend_df[(hc_trend_df['Event Time'].isin(timeSelection)) & (hc_trend_df['Headcount Type'].isin(headcountTypes))].groupby(['Date', 'Headcount Type'])['Headcounts'].sum().reset_index(), x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)
