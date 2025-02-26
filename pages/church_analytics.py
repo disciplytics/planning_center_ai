@@ -20,7 +20,7 @@ if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:        
         @st.cache_data
-        def headcounts_trend(data):
+        def headcounts_data(data):
                 data['Headcount Type'] = data['attributes.name_at']
                 data['Headcounts'] = pd.to_numeric(data['attributes.total'])
                 data['Date'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.date
@@ -30,7 +30,25 @@ else:
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'])
                 data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
                 return data.groupby(['Headcount Type', 'week_of_year', 'Year', 'Date', 'Event Time'])['Headcounts'].sum().reset_index()
-        hc_trend_df = headcounts_trend(st.session_state.headcounts_df)
+        hc_trend_df = headcounts_data(st.session_state.headcounts_df)
+
+        def headcounts_analysis(data, metric):
+                trend_tab.bar_chart(
+                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes))].groupby(['Date', 'Headcount Type'])[metric].sum().reset_index(), 
+                        x='Date', 
+                        y=metric, 
+                        x_label='Date', 
+                        y_label=metric, 
+                        color='Headcount Type',)
+                
+                yoy_tab.line_chart(
+                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes))].groupby(['Year', 'week_of_year'])[metric].sum().reset_index(), 
+                        x='week_of_year', 
+                        y=metric, 
+                        x_label='Week of Year', 
+                        y_label=metric, 
+                        color='Year',)
+                
 
         headcount_col, giving_col = st.columns(2)
         
@@ -43,8 +61,7 @@ else:
                 headcountTypes = hcCol.pills("Headcount Type", types, selection_mode="multi", default=types)
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
-                trend_tab.bar_chart(data=hc_trend_df[(hc_trend_df['Event Time'].isin(timeSelection)) & (hc_trend_df['Headcount Type'].isin(headcountTypes))].groupby(['Date', 'Headcount Type'])['Headcounts'].sum().reset_index(), x='Date', y='Headcounts', x_label='Date', y_label='Headcounts', color='Headcount Type',)
-                yoy_tab.line_chart(data=hc_trend_df[(hc_trend_df['Event Time'].isin(timeSelection)) & (hc_trend_df['Headcount Type'].isin(headcountTypes))].groupby(['Year', 'week_of_year'])['Headcounts'].sum().reset_index(), x='week_of_year', y='Headcounts', x_label='Week of Year', y_label='Headcounts', color='Year',)
+                headcounts_analysis(hc_trend_df, 'Headcounts')
                 st.write(hc_trend_df)
                 st.write(st.session_state.headcounts_df)
                 
