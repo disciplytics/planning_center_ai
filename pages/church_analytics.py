@@ -62,7 +62,7 @@ else:
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
-                        col1, col2, col3, col4 = st.columns(5)
+                        col1, col2, col3, col4 = st.columns(4)
                         metricTypes = col1.pills("Metric", metrics, selection_mode="single", default='Headcounts')
                         yearSelection = col2.pills("Year", years, selection_mode="multi", default=years)
                         timeSelection = col3.pills("Event Times", times, selection_mode="multi", default=times)
