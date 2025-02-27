@@ -70,12 +70,23 @@ else:
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
 
-        #@cache_data
-        #def headcounts_data(data): 
-
+        @cache_data
+        def donations_data(data): 
+                data = pd.merge(data, st.session_state.people_df[['id', 'relationships.primary_campus.data.id']], left_on = 'relationships.person.data.id', right_on = 'id')
+                data = pd.merge(data, st.session_state.campus_df[['id', 'attributes.name']], left_on = 'relationships.primary_campus.data.id', right_on = 'id')
+                data['Date'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.date
+                data['Week of Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.isocalendar().week
+                data['Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.year.astype(str)
+                data['Month'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.month.astype(int)
+                data['Donations'] = pd.to_numeric(data['attributes.ammount_cents'])/100
+                data['Donor Campus'] = data['attributes.name']
+                data['Donation Type'] = np.where(data['relationships.recurring_donation.data'].isnull(), 'NonRecurring', 'Recurring')
+                return data.groupby(['Donor Campus', 'Donation Type', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
+        d_trend_df = donations_data(st.session_state.donations_df)
+        
         with giving_col.container(border=True):
                 st.subheader("Giving Metrics")
-                st.session_state.donations_df
+                d_trend_df
 
         st.session_state.people_df
 
