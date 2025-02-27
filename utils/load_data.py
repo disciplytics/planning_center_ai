@@ -74,7 +74,7 @@ def load_data(pco):
 
       donations_data_df = donations_data_df.reset_index(drop=True)
       donations_include_df = donations_include_df.reset_index(drop=True)
-      return donations_include_df#donations_data_df
+      return donations_data_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
