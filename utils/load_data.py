@@ -89,7 +89,7 @@ def load_data(pco):
       donations_include_df = donations_include_df.reset_index(drop=True)
 
       
-      donations_data_df = pd.json_normalize(donations_data_df)#.explode('relationships.designations.data')
+      #donations_data_df = pd.json_normalize(donations_data_df)#.explode('relationships.designations.data')
 
       def extract_values(dictionary):
         id = dictionary.get('id', None)
