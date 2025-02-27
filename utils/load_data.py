@@ -6,6 +6,7 @@ def load_data(pco):
     try:
       people_data_df = pd.DataFrame()
       people_include_df = pd.DataFrame()
+      
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus,school'):
         people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
         people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
@@ -22,7 +23,12 @@ def load_data(pco):
     try:
       headcounts_data_df = pd.DataFrame()
       headcounts_include_df = pd.DataFrame()
-      for headcount in pco.iterate('/check-ins/v2/headcounts?include=attendance_type,event_time&where[updated_at][gte]=2024-01-01'):
+
+      if query_date:
+        url_string = f'/check-ins/v2/headcounts?include=attendance_type,event_time&where[updated_at][gte]={query_date}'
+      else:
+        url_string = '/check-ins/v2/headcounts?include=attendance_type,event_time&where[updated_at][gte]=2024-01-01'
+      for headcount in pco.iterate(url_string):
         headcounts_data_df = pd.concat([headcounts_data_df, pd.json_normalize(headcount['data'])])
         headcounts_include_df = pd.concat([headcounts_include_df, pd.json_normalize(headcount['included'])])
 
@@ -54,10 +60,14 @@ def load_data(pco):
 
   
 
-  async def fetch_donations_data():
+  async def fetch_donations_data(query_date = None):
     try:
       donations_df = []
-      for donation in pco.iterate('/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]=2024-01-01T12:00:00Z'):
+      if query_date:
+        url_string = f'/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]={query_date}'
+      else:
+        url_string = '/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]=2024-01-01T12:00:00Z'
+      for donation in pco.iterate():
         donations_df.append(donation)
       return donations_df
     except Exception as e:
@@ -66,7 +76,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await fetch_headcounts_data()
+    return await fetch_headcounts_data(), await fetch_donations_data()
 
   
   return asyncio.run(main())
