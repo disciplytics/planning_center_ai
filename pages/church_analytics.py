@@ -19,7 +19,6 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
 if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:        
-        st.session_state.headcounts_df
         @st.cache_data
         def headcounts_data(data):
                 data['Headcount Type'] = data['attributes.name_at']
