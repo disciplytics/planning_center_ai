@@ -35,11 +35,13 @@ else:
         try:
                 print(st.session_state.headcounts_df)
         except:
-                st.session_state.headcounts_df, st.session_state.donations_df = load_data(pco)
+                st.session_state.headcounts_df, st.session_state.donations_df, st.session_state.people_df, st.session_state.campus_df = load_data(pco)
 
         logout = st.button("Log out of Planning Center")
         if logout:
                 del st.session_state["token"]
                 del st.session_state["headcounts_df"]
                 del st.session_state["donations_df"]
+                del st.session_state["people_df"]
+                del st.session_state["campus_df"]
                 st.rerun()
