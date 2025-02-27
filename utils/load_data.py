@@ -96,7 +96,7 @@ def load_data(pco):
         return id
         
       #donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(extract_values(x)))
-      return donations_data_df.explode('relationships.designations.data')
+      return donations_data_df.explode('relationships.designations.data')['relationships.designations.data'].apply(lambda x: pd.Series(extract_values(x)))
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
