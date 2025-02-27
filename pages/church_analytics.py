@@ -31,8 +31,8 @@ else:
                 data['Week of Year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.isocalendar().week
                 data['Year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.year.astype(str)
                 data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour']).astype(int)
-                data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'].astype(int).astype(str))
-                data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(int).astype(str)
+                data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'].astype(int))
+                data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
                 return data.groupby(['Headcount Type', 'Week of Year', 'Year', 'Date', 'Event Time', 'Event Frequency', 'Event'])[['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']].sum().reset_index()
         hc_trend_df = headcounts_data(st.session_state.headcounts_df)
 
