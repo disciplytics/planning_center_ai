@@ -93,9 +93,10 @@ else:
                 campuses = np.sort(pd.unique(d_trend_df['Donor Campus']))
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
-                        yearSelection = st.pills("Year", years, selection_mode="multi", default=years)
-                        donationTypes = st.pills("Donation Type", types, selection_mode="multi", default=types)
-                        campusSelection = st.pills("Donor Campus", campuses, selection_mode="multi", default=campuses)
+                        col1, col2, col3 = st.columns(3)
+                        yearSelection = col1.pills("Year", years, selection_mode="multi", default=years)
+                        donationTypes = col2.pills("Donation Type", types, selection_mode="multi", default=types)
+                        campusSelection = col3.pills("Donor Campus", campuses, selection_mode="multi", default=campuses)
                         
                 def donation_analysis(data):
                         trend_tab.bar_chart(
