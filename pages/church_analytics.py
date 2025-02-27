@@ -62,10 +62,12 @@ else:
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
-                        yearSelection = st.pills("Year", years, selection_mode="multi", default=years)
-                        timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
-                        headcountTypes = st.pills("Headcount Type", types, selection_mode="multi", default=types)
-                        metricTypes = st.pills("Metric", metrics, selection_mode="single", default='Headcounts')
+                        col1, col2, col3, col4 = st.columns(5)
+                        metricTypes = col1.pills("Metric", metrics, selection_mode="single", default='Headcounts')
+                        yearSelection = col2.pills("Year", years, selection_mode="multi", default=years)
+                        timeSelection = col3.pills("Event Times", times, selection_mode="multi", default=times)
+                        headcountTypes = col4.pills("Headcount Type", types, selection_mode="multi", default=types)
+                        
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
