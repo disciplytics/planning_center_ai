@@ -72,3 +72,4 @@ else:
 
         with giving_col.container(border=True):
                 st.subheader("Giving Metrics")
+                st.session_state.donations_df
