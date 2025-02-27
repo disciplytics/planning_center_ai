@@ -112,7 +112,7 @@ else:
                         st.write(least_recent_yr)
                     
                         most_recent_ytd = filter_df[filter_df['Year'] == most_recent_yr]['Donations'].sum()
-                        most_recent_avg = filter_df[filter_df['Year'] == most_recent_yr].groupby(['id'])['Donations'].sum().mean()
+                        most_recent_avg = filter_df[filter_df['Year'] == most_recent_yr]['Donations'].mean()
                     
                         label_val_yoy = f"Y/Y Giving - {most_recent_yr}"
                     
@@ -122,7 +122,7 @@ else:
                                       (filter_df['Week'] <= max_year_week)]['Donations'].sum()
     
                         delta_avg = filter_df[(filter_df['Year'] == least_recent_yr) &
-                                      (filter_df['Week'] <= max_year_week)].groupby(['id'])['Donations'].sum().mean()
+                                      (filter_df['Week'] <= max_year_week)]['Donations'].mean()
 
                         yoysum.metric(
                             label=label_val_ytd,
