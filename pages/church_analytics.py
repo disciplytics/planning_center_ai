@@ -183,7 +183,7 @@ else:
                         
                         st.subheader('Giving Breakdowns')
                 
-                        pc_toggle = st.toggle('Include Primary Campus In Breakdown')
+                        pc_toggle = st.toggle('Include Donor Campus In Breakdown')
                         member_tab, fund_tab = st.tabs(['Giving By Membership', 'Giving By Fund'])
 
                         def breadown_analysis(data, metric, toggle = None):
