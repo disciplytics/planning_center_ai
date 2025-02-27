@@ -110,10 +110,10 @@ else:
                                 color='Year',)
                         
                         yoym_tab.line_chart(
-                                data=filter_df.groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
+                                data=filter_df.groupby(['Year', 'Month'])['Donations'].sum().reset_index(), 
                                 x='Month', 
                                 y='Donations', 
-                                x_label='Week of Year', 
+                                x_label='Month', 
                                 y_label='Donations', 
                                 color='Year',)
                         
