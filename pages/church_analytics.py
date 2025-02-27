@@ -152,7 +152,7 @@ else:
                         yoydons.metric(
                             label=label_val_dons,
                             value= '{:,}'.format(most_recent_dons),
-                            delta = f"{least_recent_yr}: '{:,}'.format(delta_dons)",
+                            delta = f"{least_recent_yr}: {'{:,}'.format(delta_dons)}",
                             delta_color="off"
                         )
                         
