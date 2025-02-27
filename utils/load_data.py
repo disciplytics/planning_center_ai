@@ -2,7 +2,20 @@ import asyncio
 import pandas as pd
 
 def load_data(pco):
-  async def fetch_peopl_data(query_date = None):
+  async def fetch_campus_data():
+    try:
+      campus_data_df = pd.DataFrame()
+      for campus in pco.iterate('/people/v2/campuses'):
+        campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
+        
+      campus_data_df = campus_data_df.reset_index(drop=True)
+      return campus_data_df
+    except Exception as e:
+      # handle the exception
+      error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
+      return e.status_code
+      
+  async def fetch_people_data(query_date = None):
     try:
       people_data_df = pd.DataFrame()
       people_include_df = pd.DataFrame()
@@ -81,8 +94,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await asyncio.gather(fetch_headcounts_data(), fetch_donations_data())
-    #return await fetch_headcounts_data(), await fetch_donations_data()
+    return await asyncio.gather(fetch_headcounts_data(), fetch_donations_data(), fetch_people_data(), fetch_campus_data())
 
   
   return asyncio.run(main())
