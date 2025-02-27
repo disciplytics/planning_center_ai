@@ -84,7 +84,7 @@ else:
                 data['Donations'] = pd.to_numeric(data['attributes.amount_cents'])/100
                 data['Donor Campus'] = data['attributes.name']
                 data['Donation Type'] = np.where(data['relationships.recurring_donation.data'].isnull(), 'NonRecurring', 'Recurring')
-                return data.groupby(['Donor Campus', 'Donation Type', 'Fund', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
+                return data.groupby(['id', 'relationships.person.data.id', 'Donor Campus', 'Donation Type', 'Fund', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
         d_trend_df = donations_data(st.session_state.donations_df)
         
         with st.container(border=True):
@@ -111,17 +111,23 @@ else:
 
                     
                         most_recent_ytd = filter_df[filter_df['Year'] == most_recent_yr]['Donations'].sum()
-                        most_recent_avg = filter_df[filter_df['Year'] == most_recent_yr]['Donations'].mean()
-                    
+                        most_recent_avg = filter_df[filter_df['Year'] == most_recent_yr].groupby(['id'])['Donations'].sum().mean()
+                        most_recent_dons = filter_df[filter_df['Year'] == most_recent_yr]['relationships.person.data.id'].nunique()
+                        
                         label_val_yoy = f"Y/Y Giving - {most_recent_yr}"
                     
                         label_val_avg = f"Average Gift - {most_recent_yr}"
+
+                        label_val_dons = f"Y/Y Donors - {most_recent_yr}/{least_recent_yr}"
 
                         delta_ytd = filter_df[(filter_df['Year'] == least_recent_yr) &
                                       (filter_df['Week of Year'] <= max_year_week)]['Donations'].sum()
     
                         delta_avg = filter_df[(filter_df['Year'] == least_recent_yr) &
-                                      (filter_df['Week of Year'] <= max_year_week)]['Donations'].mean()
+                                      (filter_df['Week of Year'] <= max_year_week)].groupby(['id'])['Donations'].sum().mean()
+
+                        delta_dons = filter_df[(filter_df['Year'] == least_recent_yr) &
+                                      (filter_df['Week of Year'] <= max_year_week)]['relationships.person.data.id'].nunique()
 
                         yoysum.metric(
                             label=label_val_ytd,
@@ -140,6 +146,13 @@ else:
                             label=label_val_avg,
                             value= '${:,}'.format(np.round(most_recent_avg,2)),
                             delta = f"Avg Gift - {least_recent_yr}: {'${:,}'.format(np.round(delta_avg,2))}",
+                            delta_color="off"
+                        )
+
+                        yoydons.metric(
+                            label=label_val_dons,
+                            value= '{:,}'.format(most_recent_dons),
+                            delta = f"{least_recent_yr}: '{:,}'.format(delta_dons)",
                             delta_color="off"
                         )
                         
@@ -174,7 +187,7 @@ else:
                                 y = 'Donations', x = 'Fund', horizontal = True, color = 'Year'
                         )
 
-                yoysum, yoypct, avggift = st.columns(3)
+                yoysum, yoypct, avggift, yoydons = st.columns(4)
                 yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
                 breakdowncol1, breakdowncol2 = st.columns(2)
                 donation_analysis(d_trend_df)
