@@ -70,6 +70,9 @@ else:
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
 
+        #@cache_data
+        #def headcounts_data(data): 
+
         with giving_col.container(border=True):
                 st.subheader("Giving Metrics")
                 st.session_state.donations_df
