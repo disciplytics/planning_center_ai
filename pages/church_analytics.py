@@ -66,13 +66,13 @@ else:
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
-                        col1, col2, col3, col4, col5, col6 = st.columns(6)
-                        metricTypes = col1.pills("Metric", metrics, selection_mode="single", default='Headcounts')
-                        yearSelection = col2.pills("Year", years, selection_mode="multi", default=years)
-                        timeSelection = col3.pills("Event Times", times, selection_mode="multi", default=times)
-                        eventSelection = col4.pills("Event", events, selection_mode="multi", default=events)
-                        headcountTypes = col5.pills("Headcount Type", types, selection_mode="multi", default=types)
-                        eventFreqs = col6.pills("Event Frequency", frequencies, selection_mode="multi", default=frequencies)
+                        mtcol, ycol, tcol, ecol, htcol, efcol = st.columns(6)
+                        metricTypes = mtcol.pills("Metric", metrics, selection_mode="single", default='Headcounts')
+                        yearSelection = ycol.pills("Year", years, selection_mode="multi", default=years)
+                        timeSelection = tcol.pills("Event Times", times, selection_mode="multi", default=times)
+                        eventSelection = ecol.pills("Event", events, selection_mode="multi", default=events)
+                        headcountTypes = htcol.pills("Headcount Type", types, selection_mode="multi", default=types)
+                        eventFreqs = efcol.pills("Event Frequency", frequencies, selection_mode="multi", default=frequencies)
                         
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
