@@ -101,6 +101,22 @@ else:
                         
                 def donation_analysis(data):
                         filter_df = data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))]
+                        yoyw_tab.line_chart(
+                                data=filter_df.groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
+                                x='Week of Year', 
+                                y='Donations', 
+                                x_label='Week of Year', 
+                                y_label='Donations', 
+                                color='Year',)
+                        
+                        yoym_tab.line_chart(
+                                data=filter_df.groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
+                                x='Month', 
+                                y='Donations', 
+                                x_label='Week of Year', 
+                                y_label='Donations', 
+                                color='Year',)
+                        
                         trend_tab.bar_chart(
                                 data=filter_df.groupby(['Date', 'Donor Campus'])['Donations'].sum().reset_index(), 
                                 x='Date', 
@@ -109,13 +125,7 @@ else:
                                 y_label='Donations', 
                                 color='Donor Campus',)
                         
-                        yoy_tab.line_chart(
-                                data=filter_df.groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
-                                x='Week of Year', 
-                                y='Donations', 
-                                x_label='Week of Year', 
-                                y_label='Donations', 
-                                color='Year',)
+                        
 
                         st.write('Donations By Fund')
                         st.bar_chart(
@@ -124,7 +134,7 @@ else:
                                 y_label = ''
                         )
 
-                trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
+                yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
                 donation_analysis(d_trend_df)
 
         st.session_state.people_df
