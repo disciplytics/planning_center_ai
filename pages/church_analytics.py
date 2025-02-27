@@ -180,10 +180,10 @@ else:
                                 y_label='Donations', 
                                 color='Donor Campus',)
                         
-                        breakdowncol1.write('Donations By Fund')
+                        st.write('Donations By Fund')
                         fund_df = filter_df.groupby(['Fund','Year'])[['Donations', 'relationships.person.data.id']].agg({'Donations':'sum','relationships.person.data.id':'nunique'}).reset_index().rename(columns={'relationships.person.data.id':'Donors'})
 
-                        breakdowncol1.altair_chart(
+                        st.altair_chart(
                             alt.hconcat(
                             alt.Chart(fund_df).mark_bar().encode(
                                 alt.X('sum(Donations):Q'),
