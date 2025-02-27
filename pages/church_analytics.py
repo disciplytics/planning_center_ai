@@ -78,7 +78,7 @@ else:
                 data = pd.merge(data, st.session_state.people_df[['id', 'relationships.primary_campus.data.id']], left_on = 'relationships.person.data.id', right_on = 'id')
                 data = pd.merge(data, st.session_state.campus_df[['id', 'attributes.name']], left_on = 'relationships.primary_campus.data.id', right_on = 'id')
                 data['Date'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.date
-                data['Week of Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.isocalendar().week
+                data['Week of Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.isocalendar().week.astype(int)
                 data['Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.year.astype(str)
                 data['Month'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.month.astype(int)
                 data['Donations'] = pd.to_numeric(data['attributes.amount_cents'])/100
