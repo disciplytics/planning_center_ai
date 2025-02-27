@@ -65,7 +65,7 @@ def load_data(pco):
                                           )
 
       event_data_df = pd.DataFrame()
-      for event in pco.iterate(/check-ins/v2/events):
+      for event in pco.iterate('/check-ins/v2/events'):
         event_data_df = pd.concat([headcounts_data_df, pd.json_normalize(event['data'])])
 
       
