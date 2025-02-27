@@ -87,6 +87,14 @@ def load_data(pco):
 
       donations_data_df = donations_data_df.reset_index(drop=True)
       donations_include_df = donations_include_df.reset_index(drop=True)
+
+      
+      donations_data_df = donations_data_df.explode('relationships.designations.data')
+
+      def extract_values(x):
+        return x['id']
+        
+      donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(x['id']))
       return donations_data_df
     except Exception as e:
       # handle the exception
