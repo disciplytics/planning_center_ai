@@ -26,7 +26,7 @@ def load_data(pco):
 
       people_data_df = people_data_df.reset_index(drop=True)
       people_include_df = people_include_df.reset_index(drop=True)
-"""
+      """
       people_data_df['relationships.phone_numbers.data'] = people_data_df['relationships.phone_numbers.data'].fillna({'type':'PhoneNumber', 'id': 'no_id'})
       
       people_data_df = people_data_df.explode('relationships.phone_numbers.data')        
