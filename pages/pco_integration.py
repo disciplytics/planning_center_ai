@@ -6,6 +6,17 @@ import pandas as pd
 import asyncio
 from utils.load_data import load_data
 
+page_element="""
+<style>
+[data-testid="stAppViewContainer"]{
+  background-image: url("https://media.licdn.com/dms/image/v2/D4E3DAQFnxf-4k1aYcQ/image-scale_191_1128/B4EZVIHnzuH0Ac-/0/1740671712804/disciplytics_llc_cover?e=1741276800&v=beta&t=yE-cC6q15mTArPuK2TBnhbRBra0DUYeDNbA5z43Kl4c");
+  background-size: cover;
+}
+</style>
+"""
+
+st.markdown(page_element, unsafe_allow_html=True)
+
 
 # PAGE CONGIG
 st.set_page_config(
