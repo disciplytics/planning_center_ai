@@ -91,8 +91,9 @@ def load_data(pco):
       
       donations_data_df = donations_data_df.explode('relationships.designations.data')
 
-      def extract_values(x):
-        return x['id']
+      def extract_values(dictionary):
+        id = dictionary.get('id', None)
+        return id
         
       donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(extract_values(x)))
       return donations_data_df
