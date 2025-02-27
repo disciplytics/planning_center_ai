@@ -107,6 +107,9 @@ else:
                         most_recent_yr = pd.Series(yearSelection[:-1])
                         least_recent_yr = pd.Series(yearSelection[:-2])
                         label_val_ytd = f"YTD Giving - {most_recent_yr}"
+
+                        st.write(most_recent_yr)
+                        st.write(least_recent_yr)
                     
                         most_recent_ytd = filter_df[filter_df['Year'] == most_recent_yr]['Donations'].sum()
                         most_recent_avg = filter_df[filter_df['Year'] == most_recent_yr].groupby(['id'])['Donations'].sum().mean()
