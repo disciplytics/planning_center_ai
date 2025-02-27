@@ -31,21 +31,21 @@ else:
                 data['Year'] = pd.to_datetime(data['attributes.starts_at'], utc=True).dt.year.astype(str)
                 data['hour'] = np.where(data['attributes.hour'] > 12, data['attributes.hour'] - 12, data['attributes.hour']).astype(int)
                 data['minute'] = np.where(data['attributes.minute'] == 0, "00", data['attributes.minute'].astype(int).astype(str))
-                data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(str)
-                return data.groupby(['Headcount Type', 'Week of Year', 'Year', 'Date', 'Event Time'])[['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']].sum().reset_index()
+                data['Event Time'] = data['hour'].astype(str) + ":" + data['minute'].astype(int).astype(str)
+                return data.groupby(['Headcount Type', 'Week of Year', 'Year', 'Date', 'Event Time', 'Event Frequency', 'Event'])[['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']].sum().reset_index()
         hc_trend_df = headcounts_data(st.session_state.headcounts_df)
 
         def headcounts_analysis(data, metric):
+                filter_df = data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes)) & (data['Year'].isin(yearSelection)) & (data['Event'].isin(eventSelection)) & (data['Event Frequency'].isin(eventFreqs))]
                 trend_tab.bar_chart(
-                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes)) & (data['Year'].isin(yearSelection))].groupby(['Date', 'Headcount Type'])[metric].sum().reset_index(), 
+                        data=filter_df.groupby(['Date'])[metric].sum().reset_index(), 
                         x='Date', 
                         y=metric, 
                         x_label='Date', 
-                        y_label=metric, 
-                        color='Headcount Type',)
+                        y_label=metric, )
                 
                 yoy_tab.line_chart(
-                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes)) & (data['Year'].isin(yearSelection))].groupby(['Year', 'Week of Year'])[metric].sum().reset_index(), 
+                        data=filter_df.groupby(['Year', 'Week of Year'])[metric].sum().reset_index(), 
                         x='Week of Year', 
                         y=metric, 
                         x_label='Week of Year', 
@@ -59,14 +59,19 @@ else:
                 years = np.sort(pd.unique(hc_trend_df['Year']))
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
+                events = np.sort(pd.unique(hc_trend_df['Event']))
+                frequencies = np.sort(pd.unique(hc_trend_df['Event Frequency']))
+                types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
-                        col1, col2, col3, col4 = st.columns(4)
+                        col1, col2, col3, col4, col5, col6 = st.columns(6)
                         metricTypes = col1.pills("Metric", metrics, selection_mode="single", default='Headcounts')
                         yearSelection = col2.pills("Year", years, selection_mode="multi", default=years)
                         timeSelection = col3.pills("Event Times", times, selection_mode="multi", default=times)
-                        headcountTypes = col4.pills("Headcount Type", types, selection_mode="multi", default=types)
+                        eventSelection = col4.pills("Event", events, selection_mode="multi", default=events[0])
+                        headcountTypes = col5.pills("Headcount Type", types, selection_mode="multi", default=types)
+                        eventFreqs = col6.pills("Event Frequency", frequencies, selection_mode="multi", default=frequencies)
                         
                 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
