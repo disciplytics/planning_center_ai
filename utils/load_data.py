@@ -70,7 +70,7 @@ def load_data(pco):
 
       
       headcounts_df = pd.merge(headcounts_df, event_data_df[['id', 'attributes.name', 'attributes.frequency']].rename(columns={'attributes.name':'Event', 'attributes.frequency': 'Event Frequency'}),
-                               left_on = 'relationships.event.data.id', right_on = 'id')
+                               left_on = 'relationships.event.data.id_at', right_on = 'id')
       return headcounts_df
     except Exception as e:
       # handle the exception
