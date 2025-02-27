@@ -29,7 +29,7 @@ def load_data(pco):
 
       hh_df = people_include_df[people_include_df['type']=='Household'].dropna(axis=1, how='all')
       hh_df = hh_df.explode('relationships.people.data')        
-      hh_df['relationships.people.data.id'] = hh_df['relationships.people.data'].apply(lambda x: pd.Series(x['id']), axis=1)
+      hh_df[['relationships.people.data.type', 'relationships.people.data.id']] = pd.json_normalize(hh_df['relationships.people.data'])
       
 
       people_data_df = pd.merge(people_data_df,hh_df,
