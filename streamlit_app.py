@@ -26,7 +26,7 @@ household_health_monitor = st.Page(
 pg = st.navigation(
         {
             #"Home": [],
-            "Analytics": [church_analytics, household_health_monitor],
+            "Reports": [church_analytics, household_health_monitor],
             "Integrations": [pco_integration],
           
         }
