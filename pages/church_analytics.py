@@ -78,7 +78,7 @@ else:
                 data['Week of Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.isocalendar().week
                 data['Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.year.astype(str)
                 data['Month'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.month.astype(int)
-                data['Donations'] = pd.to_numeric(data['attributes.ammount_cents'])/100
+                data['Donations'] = pd.to_numeric(data['attributes.amount_cents'])/100
                 data['Donor Campus'] = data['attributes.name']
                 data['Donation Type'] = np.where(data['relationships.recurring_donation.data'].isnull(), 'NonRecurring', 'Recurring')
                 return data.groupby(['Donor Campus', 'Donation Type', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
