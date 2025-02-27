@@ -28,10 +28,11 @@ def load_data(pco):
       people_include_df = people_include_df.reset_index(drop=True)
 
       people_data_df['relationships.phone_numbers.data'] = people_data_df['relationships.phone_numbers.data'].fillna({'type':'PhoneNumber', 'id': 'no_id'})
+      """
       people_data_df = people_data_df.explode('relationships.phone_numbers.data')        
       people_data_df['relationships.phone_numbers.data.id'] = people_data_df['relationships.phone_numbers.data'].apply(lambda x: pd.Series(x['id']))
 
-      """
+      
       people_data_df = people_data_df.explode('relationships.households.data')        
       people_data_df['relationships.households.data.id'] = people_data_df['relationships.households.data'].apply(lambda x: pd.Series(x['id']))
 
