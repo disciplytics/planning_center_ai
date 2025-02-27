@@ -96,7 +96,7 @@ def load_data(pco):
       donations_data_df = donations_data_df.explode('relationships.designations.data')        
       donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(x['id']))
 
-      donations_include_df = donations_include_df[['id', 'attributes.amount_cents', 'relationships.fund.data.id']]
+      donations_include_df = donations_include_df[['id', 'attributes.amount_cents', 'relationships.fund.data.id']].rename(columns={'id':'relationships.designations.data.id'})
 
       for fund in pco.iterate('/giving/v2/funds'):
         funds_data_df = pd.concat([funds_data_df, pd.json_normalize(fund['data'])])
@@ -105,7 +105,7 @@ def load_data(pco):
 
       donations_include_df = pd.merge(donations_include_df, funds_data_df, on='relationships.fund.data.id')
 
-      donations_df = pd.merge(donations_data_df, donations_include_df, left_on = 'relationships.designations.data.id', right_on = 'id')
+      donations_df = pd.merge(donations_data_df, donations_include_df, on = 'relationships.designations.data.id',)
       return donations_df
     except Exception as e:
       # handle the exception
