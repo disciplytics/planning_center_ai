@@ -75,14 +75,15 @@ else:
         st.session_state.donations_df
         @st.cache_data
         def donations_data(data): 
-                data = pd.merge(data, st.session_state.people_df[['id', 'relationships.primary_campus.data.id']], left_on = 'relationships.person.data.id', right_on = 'id')
+                data = pd.merge(data, st.session_state.people_df[['id', 'relationships.primary_campus.data.id', 'attributes.membership']], left_on = 'relationships.person.data.id', right_on = 'id')
                 data = pd.merge(data, st.session_state.campus_df[['id', 'attributes.name']], left_on = 'relationships.primary_campus.data.id', right_on = 'id')
                 data['Date'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.date
                 data['Week of Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.isocalendar().week.astype(int)
                 data['Year'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.year.astype(str)
                 data['Month'] = pd.to_datetime(data['attributes.received_at'], utc=True).dt.month.astype(int)
                 data['Donations'] = pd.to_numeric(data['attributes.amount_cents'])/100
-                data['Donor Campus'] = data['attributes.name']
+                data['Donor Campus'] = np.where(data['attributes.name'].isnull(),data['attributes.name'], 'No Campus Specified')
+                data['Donor Membership'] = np.where(data['attributes.membership'].isnull(),data['attributes.membership'], 'No Membership Specified')
                 data['Donation Type'] = np.where(data['relationships.recurring_donation.data'].isnull(), 'NonRecurring', 'Recurring')
                 return data.groupby(['id', 'relationships.person.data.id', 'Donor Campus', 'Donation Type', 'Fund', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
         d_trend_df = donations_data(st.session_state.donations_df)
@@ -181,25 +182,56 @@ else:
                                 color='Donor Campus',)
                         
                         st.subheader('Giving Breakdowns')
-                        fund_df = filter_df.groupby(['Fund','Year'])[['Donations', 'relationships.person.data.id']].agg({'Donations':'sum','relationships.person.data.id':'nunique'}).reset_index().rename(columns={'relationships.person.data.id':'Donors'})
+                
+                        pc_toggle = st.toggle('Include Primary Campus In Breakdown')
+                        member_tab, fund_tab = st.tabs(['Giving By Membership', 'Giving By Fund'])
 
-                        st.altair_chart(
-                            alt.hconcat(
-                            alt.Chart(fund_df).mark_bar().encode(
-                                alt.X('sum(Donations):Q'),
-                                alt.Y('Fund:O'),
-                                color='Year:N',
-                            ),
-                            alt.Chart(fund_df).mark_bar().encode(
-                                alt.X('sum(Donors):Q'),
-                                alt.Y('Fund:O').title(None),
-                                color='Year:N',
-                            ))
-                            , use_container_width=True)
+                        def breadown_analysis(data, metric, toggle = None):
+                                if toggle:
+                                        bd_df = data.groupby([metric,'Year', 'Donor Campus'])[['Donations', 'relationships.person.data.id']].agg({'Donations':'sum','relationships.person.data.id':'nunique'}).reset_index().rename(columns={'relationships.person.data.id':'Donors'})
+                                        st.altair_chart(
+                                            alt.hconcat(
+                                            alt.Chart(bd_df).mark_bar().encode(
+                                                alt.X('sum(Donations):Q'),
+                                                alt.Y(f'{metric}:O'),
+                                                color='Year:N',
+                                                row='Donor Campus:N'
+                                            ),
+                                            alt.Chart(bd_df).mark_bar().encode(
+                                                alt.X('sum(Donors):Q'),
+                                                alt.Y(f'{metric}:O').title(None),
+                                                color='Year:N',
+                                                row=alt.Row('Donor Campus:N').title(None)
+                                            ))
+                                            , use_container_width=True)
+                                else:
+                                        bd_df = data.groupby([metric,'Year'])[['Donations', 'relationships.person.data.id']].agg({'Donations':'sum','relationships.person.data.id':'nunique'}).reset_index().rename(columns={'relationships.person.data.id':'Donors'})
+                                        st.altair_chart(
+                                            alt.hconcat(
+                                            alt.Chart(bd_df).mark_bar().encode(
+                                                alt.X('sum(Donations):Q'),
+                                                alt.Y(f'{metric}:O'),
+                                                color='Year:N',
+                                            ),
+                                            alt.Chart(bd_df).mark_bar().encode(
+                                                alt.X('sum(Donors):Q'),
+                                                alt.Y(f'{metric}:O').title(None),
+                                                color='Year:N',
+                                            ))
+                                            , use_container_width=True)
+
+                        with member_tab:
+                                if pc_toggle:        
+                                        breadown_analysis(filter_df, 'Donor Membership', toggle)
+                                else:
+                                        breadown_analysis(filter_df, 'Donor Membership')
+                        with fund_tab:
+                                if pc_toggle:   
+                                        breadown_analysis(filter_df, 'Fund', toggle)
+                                else:
+                                        breadown_analysis(filter_df, 'Fund')
                         
                         
-                        #breakdowncol1.bar_chart(filter_df.groupby(['Fund', 'Year'])['Donations'].sum().reset_index(), y = 'Donations', x = 'Fund', horizontal = True, color = 'Year')
-
                 yoysum, yoypct, avggift, yoydons = st.columns(4)
                 yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
                 breakdowncol1, breakdowncol2 = st.columns(2)
