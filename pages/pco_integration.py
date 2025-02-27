@@ -32,7 +32,7 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
         # load data from pco
-        if len(st.session_state.headcounts_df) > 0
+        if len(st.session_state.headcounts_df) > 0:
                 pass
         else
                 st.session_state.headcounts_df = load_data(pco)
