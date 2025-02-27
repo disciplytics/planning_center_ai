@@ -19,4 +19,10 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
 if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:
-  st.write('do stuff')
+        st.write('Household Health Report')
+
+        @st.cache_data
+        def household_health_report():
+                return 'hello'
+
+
