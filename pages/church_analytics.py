@@ -37,7 +37,7 @@ else:
 
         def headcounts_analysis(data, metric):
                 trend_tab.bar_chart(
-                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes))].groupby(['Date', 'Headcount Type'])[metric].sum().reset_index(), 
+                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes)) & (data['Year'].isin(yearSelection))].groupby(['Date', 'Headcount Type'])[metric].sum().reset_index(), 
                         x='Date', 
                         y=metric, 
                         x_label='Date', 
@@ -45,7 +45,7 @@ else:
                         color='Headcount Type',)
                 
                 yoy_tab.line_chart(
-                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes))].groupby(['Year', 'Week of Year'])[metric].sum().reset_index(), 
+                        data=data[(data['Event Time'].isin(timeSelection)) & (data['Headcount Type'].isin(headcountTypes)) & (data['Year'].isin(yearSelection))].groupby(['Year', 'Week of Year'])[metric].sum().reset_index(), 
                         x='Week of Year', 
                         y=metric, 
                         x_label='Week of Year', 
@@ -57,12 +57,14 @@ else:
         
         with headcount_col.container(border=True):
                 st.subheader("Headcount Metrics")
-                
+
+                years = np.sort(pd.unique(hc_trend_df['Year']))
                 times = np.sort(pd.unique(hc_trend_df['Event Time']))
                 types = np.sort(pd.unique(hc_trend_df['Headcount Type']))
                 metrics = ['Headcounts', 'Guest Count', 'Regular Count', 'Volunteer Count']
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
+                        yearSelection = st.pills("Year", years, selection_mode="multi", default=years)
                         timeSelection = st.pills("Event Times", times, selection_mode="multi", default=times)
                         headcountTypes = st.pills("Headcount Type", types, selection_mode="multi", default=types)
                         metricTypes = st.pills("Metric", metrics, selection_mode="single", default='Headcounts')
