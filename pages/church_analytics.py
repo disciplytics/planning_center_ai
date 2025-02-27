@@ -122,4 +122,5 @@ else:
 
         st.session_state.campus_df
 
-        st.session_state.donations_df.explode('relationships.designations.data')
+        df = st.session_state.donations_df
+        st.write(df.explode('relationships.designations.data'))
