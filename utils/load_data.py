@@ -89,14 +89,11 @@ def load_data(pco):
       donations_include_df = donations_include_df.reset_index(drop=True)
 
       
-      donations_data_df = donations_data_df.explode('relationships.designations.data')
-
-      def extract_values(dictionary):
-        id = dictionary.get('id', None)
-        return id
-        
+      donations_data_df = donations_data_df.explode('relationships.designations.data')        
       donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(x['id']))
-      return donations_data_df
+
+      
+      return donations_include_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
