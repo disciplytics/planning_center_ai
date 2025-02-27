@@ -104,8 +104,8 @@ else:
 
                         yoysum, yoypct, avggift = st.columns(3)
                         # calculate metrics
-                        most_recent_yr = pd.Series(yearSelection[-1])
-                        least_recent_yr = pd.Series(yearSelection[-2])
+                        most_recent_yr = yearSelection[-1]
+                        least_recent_yr = yearSelection[-2]
                         label_val_ytd = f"YTD Giving - {most_recent_yr}"
 
                         st.write(most_recent_yr)
