@@ -100,8 +100,9 @@ else:
                         campusSelection = col3.pills("Donor Campus", campuses, selection_mode="multi", default=campuses)
                         
                 def donation_analysis(data):
+                        filter_df = data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))]
                         trend_tab.bar_chart(
-                                data=data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))].groupby(['Date', 'Donor Campus'])['Donations'].sum().reset_index(), 
+                                data=filter_df.groupby(['Date', 'Donor Campus'])['Donations'].sum().reset_index(), 
                                 x='Date', 
                                 y='Donations', 
                                 x_label='Date', 
@@ -109,12 +110,18 @@ else:
                                 color='Donor Campus',)
                         
                         yoy_tab.line_chart(
-                                data=data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))].groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
+                                data=filter_df.groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
                                 x='Week of Year', 
                                 y='Donations', 
                                 x_label='Week of Year', 
                                 y_label='Donations', 
                                 color='Year',)
+
+                        st.write('Donations By Fund')
+                        st.bar_chart(
+                                filter_df.groupby(['Fund'])['Donations'].sum().reset_index(), 
+                                y = 'Donations', x = 'Fund', horizontal = True
+                        )
 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 donation_analysis(d_trend_df)
