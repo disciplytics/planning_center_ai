@@ -222,12 +222,12 @@ else:
 
                         with member_tab:
                                 if pc_toggle:        
-                                        breadown_analysis(filter_df, 'Donor Membership', toggle)
+                                        breadown_analysis(filter_df, 'Donor Membership', pc_toggle)
                                 else:
                                         breadown_analysis(filter_df, 'Donor Membership')
                         with fund_tab:
                                 if pc_toggle:   
-                                        breadown_analysis(filter_df, 'Fund', toggle)
+                                        breadown_analysis(filter_df, 'Fund', pc_toggle)
                                 else:
                                         breadown_analysis(filter_df, 'Fund')
                         
