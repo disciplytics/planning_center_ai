@@ -67,7 +67,7 @@ def load_data(pco):
         url_string = f'/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]={query_date}'
       else:
         url_string = '/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]=2024-01-01T12:00:00Z'
-      for donation in pco.iterate():
+      for donation in pco.iterate(url_string):
         donations_df.append(donation)
       return donations_df
     except Exception as e:
