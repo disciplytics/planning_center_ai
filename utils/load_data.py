@@ -66,12 +66,12 @@ def load_data(pco):
 
       event_data_df = pd.DataFrame()
       for event in pco.iterate('/check-ins/v2/events'):
-        event_data_df = pd.concat([headcounts_data_df, pd.json_normalize(event['data'])])
+        event_data_df = pd.concat([event_data_df, pd.json_normalize(event['data'])])
 
       
       headcounts_df = pd.merge(headcounts_df, event_data_df[['id', 'attributes.name', 'attributes.frequency']].rename(columns={'attributes.name':'Event', 'attributes.frequency': 'Event Frequency'}),
                                left_on = 'relationships.event.data.id_at', right_on = 'id')
-      return event_data_df
+      return headcounts_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
