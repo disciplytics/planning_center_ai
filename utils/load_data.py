@@ -77,6 +77,9 @@ def load_data(pco):
     try:
       donations_data_df = pd.DataFrame()
       donations_include_df = pd.DataFrame()
+
+      funds_data_df = pd.DataFrame()
+      
       if query_date:
         url_string = f'/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]={query_date}'
       else:
@@ -88,12 +91,22 @@ def load_data(pco):
       donations_data_df = donations_data_df.reset_index(drop=True)
       donations_include_df = donations_include_df.reset_index(drop=True)
 
+      donations_data_df = donations_data_df.drop('attributes.amount_cents', axis=1)
       
       donations_data_df = donations_data_df.explode('relationships.designations.data')        
       donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(x['id']))
 
-      
-      return donations_include_df
+      donations_include_df = donations_include_df[['id', 'attributes.amount_cents', 'relationships.fund.data.id']]
+
+      for fund in pco.iterate('/giving/v2/funds'):
+        funds_data_df = pd.concat([funds_data_df, pd.json_normalize(fund['data'])])
+
+      funds_data_df = funds_data_df[['id', 'attributes.name']].rename(columns={'id':'relationships.fund.data.id', 'attributes.name':'Fund'})
+
+      donations_include_df = pd.merge(donations_include_df, funds_data_df, on='relationships.fund.data.id')
+
+      donations_df = pd.merge(donations_data_df, donations_include_df, left_on = 'relationships.designations.data.id', right_on = 'id')
+      return donations_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
