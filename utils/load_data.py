@@ -63,13 +63,18 @@ def load_data(pco):
   async def fetch_donations_data(query_date = None):
     try:
       donations_data_df = pd.DataFrame()
+      donations_include_df = pd.DataFrame()
       if query_date:
         url_string = f'/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]={query_date}'
       else:
         url_string = '/giving/v2/donations?include=designations,labels,note,refund&where[updated_at][gte]=2024-01-01T12:00:00Z'
       for donation in pco.iterate(url_string):
         donations_data_df = pd.concat([donations_data_df, pd.json_normalize(donation['data'])])
-      return donations_data_df
+        donations_include_df = pd.concat([donations_include_df, pd.json_normalize(donation['included'])])
+
+      donations_data_df = donations_data_df.reset_index(drop=True)
+      donations_include_df = donations_include_df.reset_index(drop=True)
+      return donations_include_df#donations_data_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
