@@ -101,6 +101,46 @@ else:
 
                 def donation_analysis(data):
                         filter_df = data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))]
+
+                        yoysum, yoypct, avggift = st.columns(3)
+                        # calculate metrics
+                        most_recent_yr = pd.Series(yearSelection[:-1])
+                        least_recent_yr = pd.Series(yearSelection[:-2])
+                        label_val_ytd = f"YTD Giving - {most_recent_yr}"
+                    
+                        most_recent_ytd = filter_df[filter_df['Year'] == most_recent_yr]['Donations'].sum()
+                        most_recent_avg = filter_df[filter_df['Year'] == most_recent_yr].groupby(['id'])['Donations'].sum().mean()
+                    
+                        label_val_yoy = f"Y/Y Giving - {most_recent_yr}"
+                    
+                        label_val_avg = f"Average Gift - {most_recent_yr}"
+
+                        delta_ytd = filter_df[(filter_df['Year'] == least_recent_yr) &
+                                      (filter_df['Week'] <= max_year_week)]['Donations'].sum()
+    
+                        delta_avg = filter_df[(filter_df['Year'] == least_recent_yr) &
+                                      (filter_df['Week'] <= max_year_week)].groupby(['id'])['Donations'].sum().mean()
+
+                        yoysum.metric(
+                            label=label_val_ytd,
+                            value= '${:,}'.format(np.round(most_recent_ytd,2)),
+                            delta = f"YTD - {least_recent_yr}: {'${:,}'.format(np.round(delta_ytd/1000,2))}K",
+                            delta_color="off"
+                        )
+                    
+                        yoypct.metric(
+                            label=f'{label_val_yoy}/{least_recent_yr}',
+                            value= f"{np.round((most_recent_ytd - delta_ytd)/ delta_ytd * 100,2)}%",
+                            delta_color="off"
+                        )
+                    
+                        avggift.metric(
+                            label=label_val_avg,
+                            value= '${:,}'.format(np.round(most_recent_avg,2)),
+                            delta = f"Avg Gift - {least_recent_yr}: {'${:,}'.format(np.round(delta_avg,2))}",
+                            delta_color="off"
+                        )
+                        
                         yoyw_tab.line_chart(
                                 data=filter_df.groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
                                 x='Week of Year', 
