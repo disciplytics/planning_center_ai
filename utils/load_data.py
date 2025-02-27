@@ -34,7 +34,7 @@ def load_data(pco):
       #people_data_df['relationships.households.data.id'] = people_data_df['relationships.households.data'].apply(lambda x: pd.Series(x['id']))
 
       
-      return people_include_df#[people_include_df['Type']=='Household'].dropna(axis=1, how='all')
+      return people_include_df[people_include_df['type']=='Household'].dropna(axis=1, how='all')
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
