@@ -120,7 +120,8 @@ else:
                         st.write('Donations By Fund')
                         st.bar_chart(
                                 filter_df.groupby(['Fund'])['Donations'].sum().reset_index(), 
-                                y = 'Donations', x = 'Fund', horizontal = True
+                                y = 'Donations', x = 'Fund', horizontal = True,
+                                y_label = ''
                         )
 
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
