@@ -95,7 +95,7 @@ def load_data(pco):
         id = dictionary.get('id', None)
         return id
         
-      donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(extract_values(x)))
+      donations_data_df['relationships.designations.data.id'] = donations_data_df['relationships.designations.data'].apply(lambda x: pd.Series(x['id']))
       return donations_data_df
     except Exception as e:
       # handle the exception
