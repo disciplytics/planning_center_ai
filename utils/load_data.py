@@ -33,7 +33,7 @@ def load_data(pco):
       
 
       people_data_df = pd.merge(people_data_df,hh_df,
-                                left_on = 'id' , right_on = ''relationships.people.data.id'')
+                                left_on = 'id' , right_on = 'relationships.people.data.id')
       
 
       
