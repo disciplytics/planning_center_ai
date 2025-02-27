@@ -32,9 +32,9 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
                 
         # load data from pco
-        try:
-                print(st.session_state.headcounts_df)
-        except:
+        if st.session_state.headcounts_df and st.session_state.donations_df and st.session_state.people_df and st.session_state.campus_df:
+                pass         
+        else:
                 st.session_state.headcounts_df, st.session_state.donations_df, st.session_state.people_df, st.session_state.campus_df = load_data(pco)
 
         logout = st.button("Log out of Planning Center")
