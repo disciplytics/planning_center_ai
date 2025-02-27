@@ -85,7 +85,7 @@ else:
                 data['Donor Campus'] = np.where(data['attributes.name'].isnull(), 'No Campus Specified', data['attributes.name'])
                 data['Donor Membership'] = np.where(data['attributes.membership'].isnull(), 'No Membership Specified', data['attributes.membership'])
                 data['Donation Type'] = np.where(data['relationships.recurring_donation.data'].isnull(), 'NonRecurring', 'Recurring')
-                return data.groupby(['id', 'relationships.person.data.id', 'Donor Campus', 'Donation Type', 'Fund', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
+                return data.groupby(['id', 'relationships.person.data.id', 'Donor Membership', 'Donor Campus', 'Donation Type', 'Fund', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
         d_trend_df = donations_data(st.session_state.donations_df)
         
         with st.container(border=True):
