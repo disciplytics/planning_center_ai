@@ -15,11 +15,18 @@ church_analytics = st.Page(
   default=True
 )
 
+household_health_monitor = st.Page(
+  'pages/household_health_monitor.py', 
+  title = 'Household Health Monitor', 
+  icon=":material/ecg_heart:", 
+  default=False
+)
+
 # navigation 
 pg = st.navigation(
         {
             #"Home": [],
-            "Analytics": [church_analytics],
+            "Analytics": [church_analytics, household_health_monitor],
             "Integrations": [pco_integration],
           
         }
