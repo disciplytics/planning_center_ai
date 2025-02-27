@@ -86,7 +86,34 @@ else:
         
         with giving_col.container(border=True):
                 st.subheader("Giving Metrics")
-                d_trend_df
+                years = np.sort(pd.unique(d_trend_df['Year']))
+                types = np.sort(pd.unique(d_trend_df['Donation Type']))
+                campuses = np.sort(pd.unique(d_trend_df['Donor Campus']))
+                
+                with st.expander("Filters", icon=":material/filter_alt:"):
+                        yearSelection = st.pills("Year", years, selection_mode="multi", default=years)
+                        donationTypes = st.pills("Donation Type", types, selection_mode="multi", default=types)
+                        campusSelection = st.pills("Donor Campus", campuses, selection_mode="multi", default='campuses')
+                        
+                def donation_analysis(data):
+                        trend_tab.bar_chart(
+                                data=data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))].groupby(['Date', 'Donor Campus'])['Donations'].sum().reset_index(), 
+                                x='Date', 
+                                y='Donations', 
+                                x_label='Date', 
+                                y_label='Donations', 
+                                color='Donor Campus',)
+                        
+                        yoy_tab.line_chart(
+                                data=data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))].groupby(['Year', 'Week of Year'])['Donations'].sum().reset_index(), 
+                                x='Week of Year', 
+                                y='Donations', 
+                                x_label='Week of Year', 
+                                y_label='Donations', 
+                                color='Year',)
+
+                trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
+                donation_analysis(d_trend_df)
 
         st.session_state.people_df
 
