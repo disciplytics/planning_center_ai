@@ -33,7 +33,7 @@ else:
                 
         # load data from pco
         if len(st.session_state.headcounts_df) > 0:
-                pass
+                print('Data already loaded')
         else
                 st.session_state.headcounts_df = load_data(pco)
 
