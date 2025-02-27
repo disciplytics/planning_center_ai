@@ -70,7 +70,7 @@ else:
                 trend_tab, yoy_tab = st.tabs(['Trend', 'Year / Year'])
                 headcounts_analysis(hc_trend_df, metricTypes)
 
-        @cache_data
+        @st.cache_data
         def donations_data(data): 
                 data = pd.merge(data, st.session_state.people_df[['id', 'relationships.primary_campus.data.id']], left_on = 'relationships.person.data.id', right_on = 'id')
                 data = pd.merge(data, st.session_state.campus_df[['id', 'attributes.name']], left_on = 'relationships.primary_campus.data.id', right_on = 'id')
