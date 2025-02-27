@@ -95,10 +95,10 @@ else:
                 
                 with st.expander("Filters", icon=":material/filter_alt:"):
                         col1, col2, col3 = st.columns(3)
-                        yearSelection = col1.pills("Year", years, selection_mode="multi", default=years)
+                        yearSelection = col1.pills("Year", years, selection_mode="multi", default=yearSelection[-2:])
                         donationTypes = col2.pills("Donation Type", types, selection_mode="multi", default=types)
                         campusSelection = col3.pills("Donor Campus", campuses, selection_mode="multi", default=campuses)
-                        st.write(yearSelection[-2:])
+
                 def donation_analysis(data):
                         filter_df = data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))]
                         yoyw_tab.line_chart(
