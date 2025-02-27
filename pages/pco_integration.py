@@ -34,7 +34,7 @@ else:
         # load data from pco
         if len(st.session_state.headcounts_df) > 0:
                 print('Data already loaded')
-        else
+        else:
                 st.session_state.headcounts_df = load_data(pco)
 
         logout = st.button("Log out of Planning Center")
