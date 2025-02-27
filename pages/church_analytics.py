@@ -151,8 +151,8 @@ else:
 
                         yoydons.metric(
                             label=label_val_dons,
-                            value= '{:,}'.format(most_recent_dons),
-                            delta = f"{least_recent_yr}: {'{:,}'.format(delta_dons)}",
+                            value= f"Number of Donors - {most_recent_yr}: {'{:,}'.format(most_recent_dons)}",
+                            delta = f"# of Donors - {least_recent_yr}: {'{:,}'.format(delta_dons)}",
                             delta_color="off"
                         )
                         
