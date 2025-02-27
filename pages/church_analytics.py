@@ -108,9 +108,6 @@ else:
                         least_recent_yr = yearSelection[-2]
                         label_val_ytd = f"YTD Giving - {most_recent_yr}"
 
-                        st.write(most_recent_yr)
-                        st.write(least_recent_yr)
-
                         max_year_week = filter_df[filter_df['Year'] == most_recent_yr]['Week of Year'].max()
 
                     
@@ -174,10 +171,11 @@ else:
                         
 
                         st.write('Donations By Fund')
-                        st.bar_chart(
-                                filter_df.groupby(['Fund'])['Donations'].sum().reset_index(), 
+                        col1, col2 = st.columns(2)
+                        col1.bar_chart(
+                                filter_df.groupby(['Fund', 'Year'])['Donations'].sum().reset_index(), 
                                 y = 'Donations', x = 'Fund', horizontal = True,
-                                y_label = ''
+                                stacked=True, color = 'Year'
                         )
 
                 yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
