@@ -180,7 +180,7 @@ else:
                                 y_label='Donations', 
                                 color='Donor Campus',)
                         
-                        st.write('Donations By Fund')
+                        st.subheader('Giving Breakdowns')
                         fund_df = filter_df.groupby(['Fund','Year'])[['Donations', 'relationships.person.data.id']].agg({'Donations':'sum','relationships.person.data.id':'nunique'}).reset_index().rename(columns={'relationships.person.data.id':'Donors'})
 
                         st.altair_chart(
