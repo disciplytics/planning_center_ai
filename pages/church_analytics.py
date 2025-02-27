@@ -102,7 +102,6 @@ else:
                 def donation_analysis(data):
                         filter_df = data[(data['Year'].isin(yearSelection)) & (data['Donation Type'].isin(donationTypes)) & (data['Donor Campus'].isin(campusSelection))]
 
-                        yoysum, yoypct, avggift = st.columns(3)
                         # calculate metrics
                         most_recent_yr = yearSelection[-1]
                         least_recent_yr = yearSelection[-2]
@@ -169,16 +168,15 @@ else:
                                 color='Donor Campus',)
                         
                         
-
-                        
-                        col1, col2 = st.columns(2)
-                        col1.write('Donations By Fund')
-                        col1.bar_chart(
+                        breakdowncol1.write('Donations By Fund')
+                        breakdowncol1.bar_chart(
                                 filter_df.groupby(['Fund', 'Year'])['Donations'].sum().reset_index(), 
                                 y = 'Donations', x = 'Fund', horizontal = True, color = 'Year'
                         )
 
+                yoysum, yoypct, avggift = st.columns(3)
                 yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
+                breakdowncol1, breakdowncol2 = st.columns(2)
                 donation_analysis(d_trend_df)
 
         st.session_state.people_df
