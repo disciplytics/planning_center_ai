@@ -236,11 +236,3 @@ else:
                 yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
                 breakdowncol1, breakdowncol2 = st.columns(2)
                 donation_analysis(d_trend_df)
-
-        st.session_state.people_df
-
-        st.session_state.campus_df
-
-        df = st.session_state.donations_df
-        st.write(pd.json_normalize(df.explode('relationships.designations.data')['relationships.designations.data']))
-        st.write()
