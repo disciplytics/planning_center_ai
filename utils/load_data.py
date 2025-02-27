@@ -27,14 +27,17 @@ def load_data(pco):
       people_data_df = people_data_df.reset_index(drop=True)
       people_include_df = people_include_df.reset_index(drop=True)
 
+      hh_df = people_include_df[people_include_df['type']=='Household'].dropna(axis=1, how='all')
+      hh_df = hh_df.explode('relationships.people.data')        
+      hh_df['relationships.people.data.id'] = hh_df['relationships.people.data'].apply(lambda x: pd.Series(x['id']))
       
 
-      #people_data_df = pd.merge(people_data_df, people_include_df[people_include_df['Type']=='Household'][['relationships.person.data.id', '']])
-      #people_data_df = people_data_df.explode('relationships.households.data')        
-      #people_data_df['relationships.households.data.id'] = people_data_df['relationships.households.data'].apply(lambda x: pd.Series(x['id']))
+      people_data_df = pd.merge(people_data_df,hh_df,
+                                left_on = 'id' , right_on = ''relationships.people.data.id'')
+      
 
       
-      return people_include_df[people_include_df['type']=='Household'].dropna(axis=1, how='all')
+      return people_data_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
