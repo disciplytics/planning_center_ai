@@ -52,10 +52,8 @@ else:
                         y_label=metric, 
                         color='Year',)
                 
-
-        headcount_col, giving_col = st.columns(2)
         
-        with headcount_col.container(border=True):
+        with st.container(border=True):
                 st.subheader("Headcount Metrics")
 
                 years = np.sort(pd.unique(hc_trend_df['Year']))
@@ -86,7 +84,7 @@ else:
                 return data.groupby(['Donor Campus', 'Donation Type', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
         d_trend_df = donations_data(st.session_state.donations_df)
         
-        with giving_col.container(border=True):
+        with st.container(border=True):
                 st.subheader("Giving Metrics")
                 years = np.sort(pd.unique(d_trend_df['Year']))
                 types = np.sort(pd.unique(d_trend_df['Donation Type']))
