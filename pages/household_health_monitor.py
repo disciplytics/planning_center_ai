@@ -21,6 +21,7 @@ if 'token' not in st.session_state:
 else:
         st.write('Household Health Report')
 
+        st.session_state.people_df
         @st.cache_data
         def household_health_report():
                 return 'hello'
