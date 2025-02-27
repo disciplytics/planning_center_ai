@@ -121,3 +121,5 @@ else:
         st.session_state.people_df
 
         st.session_state.campus_df
+
+        st.session_state.donations_df
