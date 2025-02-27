@@ -52,7 +52,7 @@ else:
                         y_label=metric, 
                         color='Year',)
 
-                st.dataframe(hc_trend_df.sort_values(by=['Date'], ascending = False).set_index('Date'))
+                st.dataframe(filter_df.sort_values(by=['Date'], ascending = False).set_index('Date'))
                 
         
         with st.container(border=True):
