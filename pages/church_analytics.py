@@ -84,7 +84,7 @@ else:
                 data['Donations'] = pd.to_numeric(data['attributes.amount_cents'])/100
                 data['Donor Campus'] = data['attributes.name']
                 data['Donation Type'] = np.where(data['relationships.recurring_donation.data'].isnull(), 'NonRecurring', 'Recurring')
-                return data.groupby(['Donor Campus', 'Donation Type', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
+                return data.groupby(['Donor Campus', 'Donation Type', 'Fund', 'Year', 'Month', 'Week of Year', 'Date'])['Donations'].sum().reset_index()
         d_trend_df = donations_data(st.session_state.donations_df)
         
         with st.container(border=True):
