@@ -123,4 +123,4 @@ else:
         st.session_state.campus_df
 
         df = st.session_state.donations_df
-        st.write(pd.json_normalize(df.explode('relationships.designations.data')))
+        st.write(df.explode('relationships.designations.data'))
