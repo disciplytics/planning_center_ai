@@ -3,7 +3,7 @@ from utils.auth import pcoAuth
 from reports.attendance import attendance_trend
 import pandas as pd
 import numpy as np
-
+import altair as alt
 # PAGE CONGIG
 st.set_page_config(
         page_title="Church Analytics", 
@@ -180,12 +180,25 @@ else:
                                 y_label='Donations', 
                                 color='Donor Campus',)
                         
-                        
                         breakdowncol1.write('Donations By Fund')
-                        breakdowncol1.bar_chart(
-                                filter_df.groupby(['Fund', 'Year'])['Donations'].sum().reset_index(), 
-                                y = 'Donations', x = 'Fund', horizontal = True, color = 'Year'
-                        )
+                        fund_df = filter_df.groupby(['Fund','Year'])[['Donations', 'relationships.person.data.id']].agg({'Donations':'sum','relationships.person.data.id':'nunique'}).reset_index().rename(columns={'relationships.person.data.id':'Donors'})
+
+                        breakdowncol1.altair_chart(
+                            alt.hconcat(
+                            alt.Chart(fund_df).mark_bar().encode(
+                                alt.X('sum(Donations):Q'),
+                                alt.Y('Fund:O'),
+                                color='Year:N',
+                            ),
+                            alt.Chart(fund_df).mark_bar().encode(
+                                alt.X('sum(Donors):Q'),
+                                alt.Y('Fund:O').title(None),
+                                color='Year:N',
+                            ))
+                            , use_container_width=True)
+                        
+                        
+                        #breakdowncol1.bar_chart(filter_df.groupby(['Fund', 'Year'])['Donations'].sum().reset_index(), y = 'Donations', x = 'Fund', horizontal = True, color = 'Year')
 
                 yoysum, yoypct, avggift, yoydons = st.columns(4)
                 yoyw_tab, yoym_tab, trend_tab = st.tabs(['Year / Year By Week', 'Year / Year By Month', 'Trend'])
