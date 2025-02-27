@@ -30,13 +30,11 @@ else:
         st.write('You are logged in!')
         # Once you've gotten your access token, you can initialize a pypco object like this:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
-                
-        # load data from pco
-        if st.session_state.headcounts_df and st.session_state.donations_df and st.session_state.people_df and st.session_state.campus_df:
-                pass         
-        else:
-                st.session_state.headcounts_df, st.session_state.donations_df, st.session_state.people_df, st.session_state.campus_df = load_data(pco)
 
+        if 'headcounts_df' not in st.session_state and 'donations_df' not in st.session_state and 'people_df' not in st.session_state and 'campus_df' not in st.session_state:
+        # load data from pco
+                st.session_state.headcounts_df, st.session_state.donations_df, st.session_state.people_df, st.session_state.campus_df = load_data(pco)
+                
         logout = st.button("Log out of Planning Center")
         if logout:
                 del st.session_state["token"]
