@@ -26,9 +26,9 @@ def load_data(pco):
 
       people_data_df = people_data_df.reset_index(drop=True)
       people_include_df = people_include_df.reset_index(drop=True)
-
+"""
       people_data_df['relationships.phone_numbers.data'] = people_data_df['relationships.phone_numbers.data'].fillna({'type':'PhoneNumber', 'id': 'no_id'})
-      """
+      
       people_data_df = people_data_df.explode('relationships.phone_numbers.data')        
       people_data_df['relationships.phone_numbers.data.id'] = people_data_df['relationships.phone_numbers.data'].apply(lambda x: pd.Series(x['id']))
 
@@ -42,7 +42,7 @@ def load_data(pco):
       people_data_df = people_data_df.explode('relationships.addresses.data')        
       people_data_df['relationships.addresses.data.id'] = people_data_df['relationships.addresses.data'].apply(lambda x: pd.Series(x['id']))"""
       
-      return people_data_df
+      return people_include_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
