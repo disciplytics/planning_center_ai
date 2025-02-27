@@ -20,7 +20,7 @@ pg = st.navigation(
         {
             #"Home": [],
             "Analytics": [church_analytics],
-            "Settings": [pco_integration],
+            "Integrations": [pco_integration],
           
         }
     )
