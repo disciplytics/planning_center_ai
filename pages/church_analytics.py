@@ -70,7 +70,7 @@ else:
                         metricTypes = col1.pills("Metric", metrics, selection_mode="single", default='Headcounts')
                         yearSelection = col2.pills("Year", years, selection_mode="multi", default=years)
                         timeSelection = col3.pills("Event Times", times, selection_mode="multi", default=times)
-                        eventSelection = col4.pills("Event", events, selection_mode="multi", default=events[0])
+                        eventSelection = col4.pills("Event", events, selection_mode="multi", default=events)
                         headcountTypes = col5.pills("Headcount Type", types, selection_mode="multi", default=types)
                         eventFreqs = col6.pills("Event Frequency", frequencies, selection_mode="multi", default=frequencies)
                         
