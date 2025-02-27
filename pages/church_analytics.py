@@ -93,7 +93,7 @@ else:
                 with st.expander("Filters", icon=":material/filter_alt:"):
                         yearSelection = st.pills("Year", years, selection_mode="multi", default=years)
                         donationTypes = st.pills("Donation Type", types, selection_mode="multi", default=types)
-                        campusSelection = st.pills("Donor Campus", campuses, selection_mode="multi", default='campuses')
+                        campusSelection = st.pills("Donor Campus", campuses, selection_mode="multi", default=campuses)
                         
                 def donation_analysis(data):
                         trend_tab.bar_chart(
