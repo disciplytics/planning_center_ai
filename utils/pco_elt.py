@@ -20,16 +20,15 @@ def pco_elt(pco):
       people_data_df = pd.DataFrame()
       people_include_df = pd.DataFrame()
 
-      people_results = []
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus,school'):
-        #people_data_df = pd.concat([people_data_df, pd.json_normalize(person)])
+        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
         #people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
         people_results.append(person['data'])
 
       #people_data_df = people_data_df.reset_index(drop=True)
       #people_include_df = people_include_df.reset_index(drop=True)
       
-      return pd.json_normalize(people_results)
+      return people_data_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
