@@ -4,6 +4,8 @@ from reports.attendance import attendance_trend
 import pandas as pd
 import numpy as np
 import altair as alt
+from utils.pco_elt import pco_elt
+
 # PAGE CONGIG
 st.set_page_config(
         page_title="Household Health Monitor", 
@@ -21,7 +23,7 @@ if 'token' not in st.session_state:
 else:
         st.write('Household Health Report')
 
-        st.session_state.people_df
+        pco_elt()
         @st.cache_data
         def household_health_report():
                 return 'hello'
