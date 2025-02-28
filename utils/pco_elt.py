@@ -27,7 +27,7 @@ def pco_elt(pco):
       people_data_df = people_data_df.reset_index(drop=True)
       people_include_df = people_include_df.reset_index(drop=True)
       
-      return people_data_df
+      return pd.json_normalize(person['data'])
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
