@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import altair as alt
 from utils.pco_elt import pco_elt
+import pypco 
 
 # PAGE CONGIG
 st.set_page_config(
@@ -21,9 +22,10 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
 if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
 else:
+        pco = pypco.PCO(token=st.session_state.token['access_token'])
         st.write('Household Health Report')
 
-        pco_elt()
+        pco_elt(pco)
         @st.cache_data
         def household_health_report():
                 return 'hello'
