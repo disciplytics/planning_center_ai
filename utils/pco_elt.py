@@ -24,7 +24,7 @@ def pco_elt(pco):
         people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
         #people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
 
-      #people_data_df = people_data_df.reset_index(drop=True)
+      people_data_df = people_data_df.reset_index(drop=True)
       #people_include_df = people_include_df.reset_index(drop=True)
       
       return people_data_df
