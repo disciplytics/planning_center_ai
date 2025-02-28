@@ -1,7 +1,7 @@
 import asyncio
 import pandas as pd
 
-def load_data(pco):
+def pco_elt(pco):
   async def fetch_campus_data():
     try:
       campus_data_df = pd.DataFrame()
@@ -21,24 +21,13 @@ def load_data(pco):
       people_include_df = pd.DataFrame()
       
       for person in pco.iterate('/people/v2/people?include=addresses,emails,field_data,households,inactive_reason,marital_status,organization,phone_numbers,primary_campus,school'):
-        people_data_df = pd.concat([people_data_df, pd.json_normalize(person['data'])])
-        people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
+        people_data_df = pd.concat([people_data_df, pd.json_normalize(person)])
+        #people_include_df = pd.concat([people_include_df, pd.json_normalize(person['included'])])
 
-      people_data_df = people_data_df.reset_index(drop=True)
-      people_include_df = people_include_df.reset_index(drop=True)
-
-      hh_df = people_include_df[people_include_df['type']=='Household'].dropna(axis=1, how='all')
-      hh_df = hh_df.explode('relationships.people.data')        
-
-      hh_df = hh_df.join(pd.json_normalize(hh_df['relationships.people.data']).drop(['type'], axis=1).rename(columns={'id':'relationships.people.data.id'})).drop('relationships.people.data',axis=1)
+      #people_data_df = people_data_df.reset_index(drop=True)
+      #people_include_df = people_include_df.reset_index(drop=True)
       
-
-      #people_data_df = pd.merge(people_data_df,hh_df,
-       #                         left_on = 'id' , right_on = 'relationships.people.data.id')
-      #
-
-      
-      return hh_df
+      return people_data_df
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
@@ -132,7 +121,7 @@ def load_data(pco):
       return e.status_code
     
   async def main():
-    return await asyncio.gather(fetch_headcounts_data(), fetch_donations_data(), fetch_people_data(), fetch_campus_data())
+    return await asyncio.gather(fetch_people_data())
 
   
   return asyncio.run(main())
