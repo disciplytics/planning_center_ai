@@ -38,7 +38,7 @@ def load_data(pco):
       #
 
       
-      return pd.json_normalize(hh_df['relationships.people.data']).drop('type', axis=1).rename(columns={'id':'relationships.people.data.id'})
+      return pd.json_normalize(hh_df['relationships.people.data'])#.drop('type', axis=1).rename(columns={'id':'relationships.people.data.id'})
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
