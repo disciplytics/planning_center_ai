@@ -28,6 +28,8 @@ else:
         st.write(st.session_state.token)
 
         st.write(pco_elt(pco))
+
+        st.write(st.session_state.result)
         @st.cache_data
         def household_health_report():
                 return 'hello'
