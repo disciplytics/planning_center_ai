@@ -22,6 +22,7 @@ def pcoAuth():
       if result and 'token' in result:
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
+          st.session_state.token['tenant'] = f"{pco.get('/people/v2/')['data']['id']}"
           st.rerun()     
         
           
