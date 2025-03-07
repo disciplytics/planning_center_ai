@@ -26,7 +26,7 @@ def pcoAuth():
           pco = pypco.PCO(token=st.session_state.token['access_token'])
           st.session_state.token['tenant'] = f"{pco.get('/people/v2/')['data']['id']}"
 
-          st.write(result)
+          st.session_state.result = result
           st.rerun()     
         
           
