@@ -25,9 +25,9 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
         st.write('Household Health Report')
 
-        st.write(st.session_state.token)
+        #st.write(st.session_state.token)
 
-        st.write(pco_elt(pco))
+        #st.write(pco_elt(pco))
 
         st.write(st.session_state.result)
         @st.cache_data
