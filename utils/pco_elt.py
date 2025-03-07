@@ -2,6 +2,9 @@ import asyncio
 import pandas as pd
 
 def pco_elt(pco):
+  async def fetch_organization_data():
+    return pco.get('/people/v2/'):
+    
   async def fetch_campus_data():
     try:
       campus_data_df = pd.DataFrame()
@@ -123,7 +126,7 @@ def pco_elt(pco):
       return e.status_code
     
   async def main():
-    return await asyncio.gather(fetch_people_data())
+    return await asyncio.gather(fetch_organization_data())
 
   
   return asyncio.run(main())
