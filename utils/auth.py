@@ -1,6 +1,7 @@
 def pcoAuth():
   from streamlit_oauth import OAuth2Component
   import streamlit as st
+  import pypco
   
   # Set environment variables
   AUTHORIZE_URL = st.secrets["AUTHORIZE_URL"]
@@ -22,7 +23,10 @@ def pcoAuth():
       if result and 'token' in result:
           # If authorization successful, save token in session state
           st.session_state.token = result.get('token')
+          pco = pypco.PCO(token=st.session_state.token['access_token'])
           st.session_state.token['tenant'] = f"{pco.get('/people/v2/')['data']['id']}"
+
+          st.write(result)
           st.rerun()     
         
           
