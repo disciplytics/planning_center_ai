@@ -19,15 +19,6 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
         width = 250)
 
 
-if not st.experimental_user.is_logged_in:
-    st.write("Please log in to access this app")
-    if st.button("Log in"):
-        st.login()
-else:
-    add_auth(required=True)
-    st.write("Welcome to the premium content!")
-
-
 # PCO AUTH 
 if 'token' not in st.session_state:
         st.switch_page("pages/pco_integration.py")   
