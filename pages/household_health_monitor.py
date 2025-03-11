@@ -27,7 +27,7 @@ else:
         pco = pypco.PCO(token=st.session_state.token['access_token'])
         st.write('Household Health Report')
 
-        st.write(pco.get('/api/v2/oauth_applications'))
+        st.write(pco.get('/people/v2/me'))
 
         @st.cache_data
         def household_health_report():
