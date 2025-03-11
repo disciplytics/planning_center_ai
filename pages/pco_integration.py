@@ -5,6 +5,7 @@ import pypco
 import pandas as pd
 import asyncio
 from utils.load_data import load_data
+from st_paywall import add_auth
 
 
 # PAGE CONGIG
@@ -21,7 +22,14 @@ st.image("https://media.licdn.com/dms/image/v2/D4E16AQGCrog5mV8nBQ/profile-displ
 # PAGE TITLE
 st.write("Planning Center Integration")
 
-
+if not st.experimental_user.is_logged_in:
+    st.write("Please log in to access this app")
+    if st.button("Log in"):
+        st.login()
+else:
+    add_auth(required=True)
+    st.write("Welcome to the premium content!")
+        
 # PCO AUTH 
 if 'token' not in st.session_state:
         st.write('Please authorize our app to access your Planning Center data.')
