@@ -19,7 +19,7 @@ if not st.experimental_user.is_logged_in:
         st.login()
 else:
     # Add subscription check for logged-in users
-    add_auth()
+    add_auth(required=True)
     
     # Your app code here - only runs for subscribed users
     st.write('Stuff')
