@@ -23,3 +23,6 @@ else:
     
     # Your app code here - only runs for subscribed users
     st.write('Stuff')
+
+    if st.button("Log out"):
+            st.logout()
