@@ -11,9 +11,7 @@ def pco_elt(pco):
       campuses = {}
       for campus in pco.iterate('/people/v2/campuses'):
         #campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
-        campuses['data'].append(campus['data'])
-        campuses['meta'].append(campus['meta'])
-        campuses['included'].append(campus['included'])
+        campuses.update(campus)
         
       #campus_data_df = campus_data_df.reset_index(drop=True)
       return campuses
@@ -130,7 +128,7 @@ def pco_elt(pco):
       return e.status_code
     
   async def main():
-    return await asyncio.gather(fetch_organization_data(), fetch_campus_data())
+    return await asyncio.gather(fetch_campus_data())
 
   
   return asyncio.run(main())
