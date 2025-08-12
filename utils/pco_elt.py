@@ -126,7 +126,7 @@ def pco_elt(pco):
       return e.status_code
     
   async def main():
-    return await asyncio.gather(fetch_organization_data())
+    return await asyncio.gather(fetch_organization_data(), fetch_campus_data())
 
   
   return asyncio.run(main())
