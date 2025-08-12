@@ -29,4 +29,4 @@ else:
 
     st.write(pco.get('/people/v2/me')['meta']['parent']['id'])
 
-    st.dataframe(pco_elt(pco))
+    st.json(pco_elt(pco))
