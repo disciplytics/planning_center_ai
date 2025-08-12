@@ -3,7 +3,7 @@ import pandas as pd
 
 def pco_elt(pco):
   async def fetch_organization_data():
-    return pco.get('/people/v2/')['data']['id']
+    return pco.get('/people/v2/')#['data']['id']
     
   async def fetch_campus_data():
     try:
