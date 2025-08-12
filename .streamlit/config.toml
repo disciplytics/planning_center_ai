@@ -3,6 +3,5 @@ primaryColor="#0e4d85"
 backgroundColor="#FFFFFF"
 secondaryBackgroundColor="#f6f6f6"
 textColor="#011c3a" 
-font="sans serif"
 [client]
 showErrorDetails = false
