@@ -8,10 +8,10 @@ def pco_elt(pco):
   async def fetch_campus_data():
     try:
       campus_data_df = pd.DataFrame()
-      campuses = []
+      campuses = {}
       for campus in pco.iterate('/people/v2/campuses'):
         #campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
-        campuses.append(campus['data'])
+        campuses.update(campus)
         
       #campus_data_df = campus_data_df.reset_index(drop=True)
       return campuses
