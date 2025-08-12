@@ -11,9 +11,9 @@ def pco_elt(pco):
       campuses = {}
       for campus in pco.iterate('/people/v2/campuses'):
         #campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
-        campuses['data'].append(campus['data]')
-        campuses['meta'].append(campus['meta]')
-        campuses['included'].append(campus['included]')
+        campuses['data'].append(campus['data'])
+        campuses['meta'].append(campus['meta'])
+        campuses['included'].append(campus['included'])
         
       #campus_data_df = campus_data_df.reset_index(drop=True)
       return campuses
