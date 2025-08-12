@@ -8,11 +8,13 @@ def pco_elt(pco):
   async def fetch_campus_data():
     try:
       campus_data_df = pd.DataFrame()
+      campuses = []
       for campus in pco.iterate('/people/v2/campuses'):
         campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
+        campuses.append(campus)
         
       campus_data_df = campus_data_df.reset_index(drop=True)
-      return campus_data_df
+      return campuses
     except Exception as e:
       # handle the exception
       error = f'{e.status_code}\n-\n{e.message}\n-\n{e.response_body}'
@@ -126,7 +128,7 @@ def pco_elt(pco):
       return e.status_code
     
   async def main():
-    return await asyncio.gather(fetch_organization_data(), fetch_campus_data(), fetch_people_data())
+    return await asyncio.gather(fetch_organization_data(), fetch_campus_data())
 
   
   return asyncio.run(main())
