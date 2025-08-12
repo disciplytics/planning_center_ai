@@ -5,7 +5,9 @@ import pandas as pd
 import numpy as np
 import altair as alt
 from st_paywall import add_auth
-from utils.pco_elt import pco_elt    
+import pypco 
+from utils.pco_elt import pco_elt   
+
 # PAGE CONGIG
 st.set_page_config(
         page_title="Church Analytics", 
