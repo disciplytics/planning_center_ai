@@ -10,10 +10,10 @@ def pco_elt(pco):
       campus_data_df = pd.DataFrame()
       campuses = []
       for campus in pco.iterate('/people/v2/campuses'):
-        campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
+        #campus_data_df = pd.concat([campus_data_df, pd.json_normalize(campus['data'])])
         campuses.append(campus)
         
-      campus_data_df = campus_data_df.reset_index(drop=True)
+      #campus_data_df = campus_data_df.reset_index(drop=True)
       return campuses
     except Exception as e:
       # handle the exception
